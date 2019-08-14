@@ -1,0 +1,267 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>班级学生管理</title>
+    <link rel="stylesheet" type="text/css" href="./resources/css/ext-all.css" />
+    <!-- LIBS -->
+    <script type="text/javascript" src="./js/ext-base.js"></script>
+    <!-- ENDLIBS -->
+    <script type="text/javascript" src="./js/ext-all.js"></script>
+    <script>
+        Ext.onReady(function () {
+            var menu = new Ext.menu.Menu({
+                items: [{
+                    id: 'deleteStudent',
+                    text: 'Delete Node'
+                },{
+                    id: 'infoStudent',
+                    text: 'Info Node'
+                },{
+                    id: 'addStudent',
+                    text: 'Add Node'
+                }],
+                listeners: {
+                    itemclick: function(item) {
+                        switch (item.id) {
+                            case 'deleteStudent':
+                                var currentNode = item.parentMenu.contextNode;
+                                if (currentNode.parentNode) {
+                                    currentNode.remove();
+                                }
+                                break;
+                            case 'infoStudent':
+                                var currentNode = item.parentMenu.contextNode;
+                                console.log(currentNode.text)
+                                Ext.Msg.alert('Message', currentNode.text);
+                                break;
+                            case 'addStudent':
+                                var currentNode = item.parentMenu.contextNode;
+                                Ext.Msg.prompt("Add Student","please input the student name",function (btn, text) {
+                                    if(btn=='ok'){
+                                        if (text === '') {
+                                            Ext.Msg.alert("error", "student name can not empty");
+                                        } else {
+                                            if (currentNode.isLeaf()) {
+                                                currentNode.parentNode.appendChild({text: text, leaf: true})
+                                            } else {
+                                                if (currentNode.parentNode) {
+                                                    currentNode.appendChild({text: text, leaf: true})
+                                                } else {
+                                                    currentNode.appendChild({text: text, children: []})
+                                                }
+                                            }
+                                        }
+                                    }
+                                    else{}
+                                },this,true);
+                                break;
+                        }
+                    }
+                }
+            });
+            var root = new Ext.tree.TreeNode({
+                text:'All Class'
+            });
+            var data = [
+                {text:'class1', children: [
+                        {text:'student1', leaf: true}
+                    ]},
+                {text:'class2', children: [
+                        {text:'student1', leaf: true}
+                    ]},
+                {text:'class3', children: [
+                        {text:'student1', leaf: true}
+                    ]}
+            ]
+            var classData = data.map((item) => {
+                return [item.text, item.text]
+            })
+            var classStore = new Ext.data.SimpleStore({
+                fields: ['value', 'text'],
+                data: classData
+            })
+            root.appendChild(data)//一次性添加多个节点
+            var tree = new Ext.tree.TreePanel({
+                // renderTo: 'test',
+                width: '100%',
+                // rootVisible: false,
+                contextMenu: menu,
+                height: 700,
+                root: root,
+                listeners: {
+                    contextmenu: function(node, e) {
+                        node.select();
+                        var treeContextMenu = node.getOwnerTree().contextMenu;
+                        treeContextMenu.contextNode = node;
+                        treeContextMenu.showAt(e.getXY());
+                    }
+                }
+            });
+            var tabPanel = new Ext.TabPanel({
+                activeTab: 0,
+                animScroll:true,
+                enableTabScroll:true,
+                flex: 5,
+                // bodyStyle: "background-color:#ff0000;",
+                items: [
+                    {
+                        title: 'Add Class',
+                        cls: 'add-class-tab',
+                        items: [
+                            {
+                                xtype: 'form',
+                                id: 'classForm',
+                                cls: 'add-class-form',
+                                labelAlign: 'right',  //标签位置
+                                labelWidth: 50,       //标签宽度
+                                buttonAlign: 'center',
+                                width: 600,
+                                title: 'form',
+                                frame: true,
+                                items: [{
+                                    layout: 'column',   //布局方式
+                                    items: [{
+                                        columnWidth: .99,  //列宽
+                                        xtype: 'fieldset',
+                                        checkboxToggle: true,
+                                        title: '',
+                                        autoHeight: true,
+                                        defaults: {width: 520},
+                                        defaultType: 'textfield',  //默认类型
+                                        items: [{
+                                            id: 'classNameField',
+                                            fieldLabel: 'name',
+                                            msgTarget: 'title',
+                                            name: 'name'
+                                        }
+                                        ]
+                                    }]
+                                }],
+                                buttons: [{
+                                    text: 'add',
+                                    handler: function(btn, form){
+                                        let addClass = Ext.getCmp('classForm').getForm().getValues().name
+                                        data.push({text: addClass, children: []})
+                                        root.removeAll()
+                                        root.appendChild(data)
+                                        classData = data.map((item) => {
+                                            return [item.text, item.text]
+                                        })
+                                        classStore.loadData(classData)
+                                        Ext.Msg.alert('Message', 'add success!')
+                                    }
+                                }, {
+                                    text: 'reset',
+                                    handler: function(btn, form){
+                                        Ext.getCmp('classForm').form.reset()
+                                    }
+                                }]
+                            }
+                        ]
+                    },
+                    {
+                        title: 'Add Student',
+                        id: 'addStudentPanel',
+                        items: [
+                            {
+                                xtype: 'form',
+                                id: 'studentForm',
+                                cls: 'add-class-form',
+                                labelAlign: 'right',  //标签位置
+                                labelWidth: 50,       //标签宽度
+                                buttonAlign: 'center',
+                                width: 600,
+                                title: 'form',
+                                frame: true,
+                                items: [{
+                                    layout: 'column',   //布局方式
+                                    items: [{
+                                        columnWidth: .99,  //列宽
+                                        xtype: 'fieldset',
+                                        checkboxToggle: true,
+                                        title: '',
+                                        autoHeight: true,
+                                        defaults: {width: 520},
+                                        defaultType: 'textfield',  //默认类型
+                                        items: [{
+                                            id: 'studentNameField',
+                                            fieldLabel: 'name',
+                                            msgTarget: 'title',
+                                            name: 'name'
+                                        }, {
+                                            xtype: 'combo',
+                                            id: 'comboClass',
+                                            fieldLabel: 'class',
+                                            name: 'class',
+                                            store: classStore,
+                                            displayField: 'text',
+                                            valueField: 'value',
+                                            mode: 'local',
+                                            emptyText: '请选择'
+                                        }
+                                        ]
+                                    }]
+                                }],
+                                buttons: [{
+                                    text: 'add',
+                                    handler: function(btn, form){
+                                        let belongClass = Ext.getCmp('studentForm').getForm().getValues().class
+                                        let studentName = Ext.getCmp('studentForm').getForm().getValues().name
+                                        for (let i = 0; i < data.length; i ++) {
+                                            if (data[i].text === belongClass) {
+                                                data[i].children.push({text: studentName, leaf: true})
+                                            }
+                                        }
+                                        root.removeAll()
+                                        root.appendChild(data)
+                                        Ext.Msg.alert('Message', 'add success!')
+                                    }
+                                }, {
+                                    text: 'reset',
+                                    handler: function(btn, form){
+                                        Ext.getCmp('studentForm').form.reset()
+                                    }
+                                }]
+                            }
+                        ]
+                    }
+                ]
+            });
+            var treeEditor = new Ext.tree.TreeEditor(tree, {allowBlank: false}, {});
+            var panel = new Ext.Panel({
+                height: 700,
+                title: "班级学生管理",
+                layout: {
+                    type: 'hbox',
+                    align: 'stretch',
+                },
+                renderTo: document.body,
+                items: [{
+                    xtype: 'panel',
+                    title: '学生班级',
+                    items: [tree],
+                    flex: 2
+                },tabPanel],
+                renderTo: test
+            });
+        })
+    </script>
+    <style>
+        .my-panel{
+            margin: 100px auto;
+        }
+        .showForm{
+            margin: 100px auto;
+        }
+        .add-class-form{
+            margin: 200px auto;
+        }
+    </style>
+</head>
+<body>
+<div id="page">
+    <div id="test"></div>
+</div>
+</body>
+</html>

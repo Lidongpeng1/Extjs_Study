@@ -1,0 +1,51 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=gbk">
+    <title>08.layout</title>
+    <link rel="stylesheet" type="text/css" href="./resources/css/ext-all.css" />
+    <script type="text/javascript" src="./js/ext-base.js"></script>
+    <script type="text/javascript" src="./js/ext-all-debug.js"></script>
+    <script type="text/javascript" src="localXHR.js"></script>
+    <script type="text/javascript">
+        Ext.onReady(function(){
+
+            var window = new Ext.Window({
+                layout : 'vbox',
+                height : 400,
+                width : 400,
+                title : 'HBox layout',
+                layoutConfig : {
+                    pack : 'center',
+                    align : 'middle',
+                },
+                defaults : {
+                    frame : true,
+                    height : 50
+                },
+                items : [
+                    {
+                        title : 'Panel 1',
+                        width : 100,
+
+                    },
+                    {
+                        title : 'Panel 2',
+                        width : 75,
+
+                    },
+                    {
+                        title : 'Panel 3',
+                        width : 200,
+
+                    }
+                ]
+
+            }).show();
+
+        });
+    </script>
+</head>
+<body>
+<div id="test"></div>
+</body>
+</html>

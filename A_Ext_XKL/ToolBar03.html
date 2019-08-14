@@ -1,0 +1,76 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Tree3</title>
+    <link rel="stylesheet" type="text/css" href="./resources/css/ext-all.css" />
+    <!-- LIBS -->
+    <script type="text/javascript" src="./js/ext-base.js"></script>
+    <!-- ENDLIBS -->
+    <script type="text/javascript" src="./js/ext-all.js"></script>
+    <script>
+        Ext.onReady(function() {
+            var tb = new Ext.Toolbar({
+                renderTo: document.body,
+                width: 800,
+                height: 50,
+                style: 'font-size: 25px;background-color:Red; ',
+                // defaults:{width: 40,height:20},//怎样让toolbar中的item文本居中显示
+                items: [
+                    {
+                        text: "文件",
+                        handler: function (btn) { Ext.MessageBox.alert(btn.text); }
+                    },'-',
+                    {
+                        text: "编辑",
+                        iconCls: "add",
+                        iconAlign: 'left',
+                    },'-',
+                    {
+                        text: "格式",
+                        menu:
+                            {
+                                items: [
+                                    {
+                                        text: '选项1'
+                                    }, {
+                                        text: '选项2'
+                                    }, {
+                                        text: '选项3',
+                                        handler: function () {
+                                            Ext.Msg.alert("提示", "来自菜单的消息");
+                                        }
+                                    }
+                                ]
+                            },
+                        arrowAlign: 'right'//right/buttom
+                    },{
+                        xtype: 'tbspacer',
+                        width: 50
+                    },'查看',
+                    {
+                        text: "帮助"
+                    }, "->",
+                    new Ext.form.Field(), {
+                        text: "搜索"
+                    }
+                ]
+            });
+            // Ext.get("btnDisable").on("click", function () {
+            //     tb.disable();
+            // });
+            // Ext.get("btnEnable").on("click", function () {
+            //     tb.enable();
+            // });
+        });
+    </script>
+    <style type="text/css">
+        .add {
+            background: url(images/1.png) left top no-repeat;
+        }
+    </style>
+</head>
+<body>
+<div id="tb"></div>
+</body>
+</html>

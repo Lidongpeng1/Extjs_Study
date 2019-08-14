@@ -1,0 +1,55 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Form</title>
+    <link rel="stylesheet" type="text/css" href="./resources/css/ext-all.css" />
+    <!-- LIBS -->
+    <script type="text/javascript" src="./js/ext-base.js"></script>
+    <!-- ENDLIBS -->
+    <script type="text/javascript" src="./js/ext-all.js"></script>
+    <script>
+        Ext.onReady(function() {
+            var myWin = new Ext.form("Ext.Window", {
+                height: 200,
+                width: 400,
+                autoScroll: true,
+                id: 'myWin',
+                title: 'A Window with a Column layout',
+                layout: 'column',
+                defaults: {
+                    frame: true
+                },
+                items: [
+                    {
+                        title: 'Col 1',
+                        id: 'col1',
+                        columnWidth: .3
+                    },
+                    {
+                        title: 'Col 2',
+                        html: "20% relative width",
+                        columnWidth: .2
+                    },
+                    {
+                        title: 'Col 3',
+                        html: "100px fixed width",
+                        width: 100
+                    },
+                    {
+                        Title: 'Col 4',
+                        frame: true,
+                        html: "50% relative width",
+                        columnWidth: .5
+                    }
+                ]
+            });
+            myWin.show();
+        });
+
+    </script>
+</head>
+<body>
+<div id="test"></div>
+</body>
+</html>

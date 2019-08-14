@@ -1,0 +1,62 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>BoxComponent</title>
+	<link rel="stylesheet" type="text/css" href="./resources/css/ext-all.css" />
+ 	<!-- LIBS -->
+ 	<script type="text/javascript" src="./js/ext-base.js"></script>
+ 	<!-- ENDLIBS -->
+    <script type="text/javascript" src="./js/ext-all.js"></script>
+	<script>
+		Ext.onReady(function() {
+			var boxCmp = new Ext.BoxComponent({
+				style: 'background-color: red; position:absolute;',
+				pageX: 200,
+				pageY: 50,
+				width: 400,
+				height: 150,
+			});
+			var boxCmp2 = new Ext.BoxComponent({
+				style: 'background-color: green; position:absolute;',
+				pageX: 200,
+				pageY: 50,
+				width: 400,
+				height: 150,
+			});
+			var cntr = new Ext.Container({
+				renderTo: 'test',
+				style: 'background-color: blue; position:absolute;',
+				pageX: 100,
+				pageY: 50,
+				width: 200,
+				height: 150,
+				layout: 'column',
+				items:[
+				  boxCmp,boxCmp2
+				]
+			});
+
+
+			Ext.get('dispaly1').on('click', function() {
+				cntr.hide();
+			});
+			Ext.get('show').on('click', function() {
+				cntr.show();
+			});
+		});
+	</script>
+	<style type="text/css">
+		.css1{
+			border: 1px solid blue;
+			background-color: red;
+			position:absolute;
+		}
+	</style>
+</head>
+<body>
+<div id="test"></div>
+<button type="button" id="dispaly">隐藏</button>
+<button type="button" id="show">显示</button>
+</body>
+</html>

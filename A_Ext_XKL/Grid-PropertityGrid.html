@@ -1,0 +1,53 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=gbk">
+    <link rel="stylesheet" type="text/css" href="./resources/css/ext-all.css" />
+    <link rel="stylesheet" type="text/css" href="./resources/css/examples.css" />
+    <!-- LIBS -->
+    <script type="text/javascript" src="./js/ext-base.js"></script>
+    <!-- ENDLIBS -->
+    <script type="text/javascript" src="./js/ext-all.js"></script>
+    <script type="text/javascript" src="./js/examples.js"></script>
+    <title>03.grid</title>
+    <style type="text/css">
+    </style>
+    <script type="text/javascript">
+        Ext.onReady(function(){
+            var grid = new Ext.grid.PropertyGrid({
+                id: 'proId',
+                autoHeight: true,
+                renderTo: 'grid',
+                source: {
+                    "name": "Hello, World",
+                    "create date": new Date(Date.parse('12/15/2007')),
+                    "isValidate": false,
+                    "version": .01,
+                    "description": "Hello, Everyone"
+                },
+                buttons: [
+                    {
+                        text: '取值',
+                        listeners : {
+                            'click': function () {
+                                var value1 = Ext.getCmp('proId').getStore().getById('name').data.value;
+                                console.log(value1);
+                                Ext.example.msg('提示', value1);
+
+                            }
+                        }
+                    }
+                ]
+
+            });
+            grid.on("beforeedit", function(e){
+                e.cancel = true;
+                return false;
+            });
+
+        });
+    </script>
+</head>
+<body>
+<div id="grid"></div>
+</body>
+</html>

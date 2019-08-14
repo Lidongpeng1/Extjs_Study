@@ -1,0 +1,93 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Form</title>
+    <link rel="stylesheet" type="text/css" href="./resources/css/ext-all.css" />
+    <link rel="stylesheet" type="text/css" href="./resources/css/examples.css" />
+    <!-- LIBS -->
+    <script type="text/javascript" src="./js/ext-base.js"></script>
+    <!-- ENDLIBS -->
+    <script type="text/javascript" src="./js/ext-all.js"></script>
+    <script type="text/javascript" src="./js/examples.js"></script>
+    <script>
+
+        // 复习内容：
+        // 消息提示框
+
+        Ext.onReady(function() {
+            MsgTip = function(){
+                var msgCt;
+                function createBox(t, s){
+                    return ['<div class="msg">',
+                        '<div class="x-box-tl"><div class="x-box-tr"><div class="x-box-tc"></div></div></div>',
+                        '<div class="x-box-ml"><div class="x-box-mr"><div class="x-box-mc" style="font-size=12px;"><h3>', t, '</h3>', s, '</div></div></div>',
+                        '<div class="x-box-bl"><div class="x-box-br"><div class="x-box-bc"></div></div></div>',
+                        '</div>'].join('');
+                }
+                return {
+                    msg : function(title, message,autoHide,pauseTime){
+                        if(!msgCt){
+                            msgCt = Ext.DomHelper.insertFirst(document.body, {id:'msg-div22',style:'position:absolute;top:10px;width:300px;margin:0 auto;z-index:20000;'}, true);
+                        }
+                        msgCt.alignTo(document, 't-t');
+                        //给消息框右下角增加一个关闭按钮
+                        message+='<br><span style="text-align:right;font-size:12px; width:100%;">' +
+                            '<font color="blank"><u style="cursor:hand;" onclick="MsgTip.hide(this);">关闭</u></font></span>'
+                        var m = Ext.DomHelper.append(msgCt, {html:createBox(title, message)}, true);
+                        m.slideIn('t');
+                        if(!Ext.isEmpty(autoHide)&&autoHide==true){
+                            if(Ext.isEmpty(pauseTime)){
+                                pauseTime=5;
+                            }
+                            m.pause(pauseTime).ghost("tr", {remove:true});
+                        }
+                    },
+                    hide:function(v){
+                        var msg=Ext.get(v.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement);
+                        msg.ghost("tr", {remove:true});
+                    }
+                };
+            }();
+            Ext.QuickTips.init();
+            var form = new Ext.form.FormPanel({
+                id: 'testForm',
+                renderTo: 'test',
+                defaultType: 'textfield',
+                labelAlign: 'center',
+                title: 'simple form',
+                labelWidth: 50,
+                frame: true,
+                width: 400,
+                items: [{
+                    id: 'nameField',
+                    msgTarget: 'title',
+                    fieldLabel: 'names',
+                    emptyText:'Please input your  English name',
+                    width:300,
+                    allowBlank:false
+                }],
+                buttons:[{
+                    text: 'submit',
+                    listeners:{
+                        'click': function(btn, form){
+                            // Ext.MessageBox.alert('Greet', 'Hello World!');
+                            Ext.example.msg('Settings Saved', 'Hello World!');
+                            // MsgTip.msg('消息', '使用默认值5秒自动隐藏',true);//自定义消息提示框
+                            // Ext.Msg.alert("消息","使用默认值5秒自动隐藏");
+                        }}
+                },{
+                    text: 'reset',
+                    listeners:{
+                        'click': function(btn, form){
+                            Ext.getCmp('nameField').reset();
+                        }}
+                }]
+            });
+        });
+    </script>
+</head>
+<body>
+<div id="test"></div>
+</body>
+</html>

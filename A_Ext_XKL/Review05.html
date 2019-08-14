@@ -1,0 +1,62 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Form</title>
+    <link rel="stylesheet" type="text/css" href="./resources/css/ext-all.css" />
+    <link rel="stylesheet" type="text/css" href="./resources/css/examples.css" />
+    <!-- LIBS -->
+    <script type="text/javascript" src="./js/ext-base.js"></script>
+    <!-- ENDLIBS -->
+    <script type="text/javascript" src="./js/ext-all.js"></script>
+    <script type="text/javascript" src="./js/examples.js"></script>
+    <script>
+
+        // 复习内容：
+        // window窗口
+
+        Ext.onReady(function() {
+            var form = new Ext.form.FormPanel({
+                id: 'testForm',
+                defaultType: 'textfield',
+                labelAlign: 'center',//表单项的名字位置
+                title: 'simple form',
+                labelWidth: 40,  //表单项的名字宽度
+                frame: true,
+                width: 400,
+                items: [{
+                    id: 'nameField',
+                    msgTarget: 'title',
+                    fieldLabel: 'names',
+                    emptyText:'Please input your  English name',
+                    width:300,
+                    allowBlank:false
+                }],
+            });
+            var w = new Ext.Window({
+                title: 'Compose message',
+                collapsible: true, //设置是否可以折叠
+                maximizable: true,  //设置是否可以全屏
+                width: 750,
+                height: 500,
+                minWidth: 300,  //设置窗口可以调整范围
+                minHeight: 200,
+                layout: 'fit',
+                // plain: true,
+                bodyStyle: 'padding:5px;',
+                buttonAlign: 'center',  //设置底部按钮的位置
+                items: form,
+                buttons: [{
+                    text: 'Send'
+                },{
+                    text: 'Cancel'
+                }]
+            });
+            w.show();
+        });
+    </script>
+</head>
+<body>
+<div id="test"></div>
+</body>
+</html>

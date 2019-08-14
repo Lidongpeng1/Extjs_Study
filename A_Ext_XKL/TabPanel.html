@@ -1,0 +1,51 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+	<title>TabPanel</title>
+	<link rel="stylesheet" type="text/css" href="./resources/css/ext-all.css" />
+ 	<!-- LIBS -->
+ 	<script type="text/javascript" src="./js/ext-base.js"></script>
+ 	<!-- ENDLIBS -->
+    <script type="text/javascript" src="./js/ext-all.js"></script>
+	<script>
+		Ext.onReady(function() {
+			var tabPanel = new Ext.TabPanel({
+				renderTo: 'my-tabs',
+				height: 400,
+				activeTab: 0,
+				buttons: [{
+                    text:'Submit',
+                    disabled:true
+                },{
+                    text: 'Close',
+                }],
+			    items:[
+			        {contentEl:'tab1', title:'Tab 1'},
+			        {contentEl:'tab2', title:'Tab 2'},
+			        {contentEl:'tab3', title:'Tab 3'},
+			        {contentEl:'tab4', title:'Tab 4'},
+			        {contentEl:'tab5', title:'Tab 5'}
+			    ]
+			});
+			// tabPanel.add({
+			// 	title: 'Tom',
+			// 	html: 'Tom Cat'
+			// });
+			// tabPanel.add({
+			// 	title: 'Jerry',
+			// 	html: 'Jerry Mouse'
+			// });
+			// tabPanel.activate(0);
+		});
+	</script>
+</head>
+<body>
+	<div id="my-tabs"></div>
+	<div id="tab1" class="x-hide-display">A simple tab</div>
+    <div id="tab2" class="x-hide-display">Another one</div>
+    <div id="tab3" class="x-hide-display">Another 2</div>
+    <div id="tab4" class="x-hide-display">Another 3</div>
+    <div id="tab5" class="x-hide-display">Another 4</div>
+</body>
+</html>

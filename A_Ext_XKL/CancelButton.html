@@ -1,0 +1,63 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+	<title>Customize Component</title>
+	<link rel="stylesheet" type="text/css" href="./resources/css/ext-all.css" />
+ 	<!-- LIBS -->
+ 	<script type="text/javascript" src="./js/ext-base.js"></script>
+ 	<!-- ENDLIBS -->
+    <script type="text/javascript" src="./js/ext-all.js"></script>
+	<style type="text/css">
+		.hello-button {
+			background: url(images/bing.jpg) left top no-repeat;
+		}
+	</style>
+	<script>
+		Ext.onReady(function() {
+			// Ext.ns('com', 'com.ita');
+			// ColorPlugin = function(){
+			// 	this.init = function(cmp){
+			// 		cmp.style = 'background-color: #ff0000';
+			// 	};
+			// };
+			// Ext.preg('com.ita.ColorPlugin', ColorPlugin);
+
+
+			Ext.ns('com.ita');
+			com.ita.CancelButton = Ext.extend(Ext.Button, {
+				text : 'Cancel',
+				iconCls: "hello-button",
+				// cls:'button-red',
+				// plugins:[{ptype:'com.ita.ColorPlugin'}],
+				initComponent : function() {
+					com.ita.CancelButton.superclass.initComponent.call(this);
+					this.on('click', this.onButtonClick, this);
+				},
+				onButtonClick : function(oEvent) {
+					Ext.Msg.alert('Cancel Button', 'This is customized cancel button, you clicked me.');			
+				}
+			});
+			Ext.reg('com.ita.CancelButton', com.ita.CancelButton);
+			
+			var panel = new Ext.Panel({
+				renderTo: 'test',
+				items:[
+					{
+						xtype: 'com.ita.CancelButton'
+					}
+				]
+			});
+			panel.render();
+		});
+	</script>
+	<style type="text/css">
+		.button-red {
+		   background-color:#ff0000;
+		}
+	</style>
+</head>
+<body>
+<div id="test"></div>
+</body>
+</html>

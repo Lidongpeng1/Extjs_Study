@@ -1,0 +1,73 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>ComboBox3</title>
+	<link rel="stylesheet" type="text/css" href="./resources/css/ext-all.css" />
+ 	<!-- LIBS -->
+ 	<script type="text/javascript" src="./js/ext-base.js"></script>
+ 	<!-- ENDLIBS -->
+    <script type="text/javascript" src="./js/ext-all.js"></script>
+	<script>
+		Ext.onReady(function() {
+			var record = Ext.data.Record.create([{name: 'provice'}, {name: 'city'}]);
+			var store = new Ext.data.Store({
+					proxy: new Ext.data.HttpProxy({url:'combox.txt'}),
+					reader: new Ext.data.ArrayReader({}, record)
+				});
+			var store3= [];
+			// var store=[
+			// 		['湖南',['长沙','湘潭','株洲']],
+			// 		['广东',['广州','珠海','深圳']], 
+			// 	];
+			var comboBox = new Ext.form.ComboBox({
+				id: 'box1',
+				renderTo: 'test',
+				fieldLabel: 'provice',
+				emptyText: 'Choose your age',
+				mode: 'remote',
+				triggerAction: 'all',
+				store: store,
+				valueField: 'provice',
+				displayField: 'provice',
+				// pageSize: 3
+			}); 
+			var comboBox2 = new Ext.form.ComboBox({
+				id: 'box2',
+				renderTo: 'test2',
+				fieldLabel: 'city',
+				emptyText: 'Choose your age',
+				mode: 'remote',
+				triggerAction: 'all',
+				store: new Ext.data.ArrayStore({
+					id: 0,
+					fields: ['city'],
+					data: store3
+				}),
+				valueField: 'city',
+				displayField: 'city',
+				// pageSize: 3
+			}); 
+			comboBox.on('select', function(combo) {
+				var value= Ext.getCmp("box1").getValue();
+				console.log(value);
+				store3=[];
+				for(var i=0;i<store.getCount();i++){
+					var recored = store.getAt(i);    
+	                // jsonArray.push(record.get('ORGID'));
+					if(recored.get('provice')==value){
+                        store4=recored.get('city');
+						store3.push(store4);
+					}
+				}
+                console.log(store3);
+			});
+
+	    });
+	</script>
+</head>
+<body>
+<div id="test"></div>
+<div id="test2"></div>
+</body>
+</html>

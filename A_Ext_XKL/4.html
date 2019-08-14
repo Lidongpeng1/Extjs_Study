@@ -1,0 +1,172 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Form</title>
+    <link rel="stylesheet" type="text/css" href="./resources/css/ext-all.css" />
+    <link rel="stylesheet" type="text/css" href="./resources/css/examples.css" />
+    <!-- LIBS -->
+    <script type="text/javascript" src="./js/ext-base.js"></script>
+    <!-- ENDLIBS -->
+    <script type="text/javascript" src="./js/ext-all.js"></script>
+    <script type="text/javascript" src="./js/examples.js"></script>
+    <script>
+        Ext.onReady(function() {
+            var answerText = ''
+            var q1_items = [{boxLabel: '湿垃圾', name: 'garbage', inputValue: 1},
+                {boxLabel: '干垃圾', name: 'garbage', inputValue: 2},
+                {boxLabel: '有害垃圾', name: 'garbage', inputValue: 3},
+                {boxLabel: '可回收垃圾', name: 'garbage', inputValue: 4}]
+            var q2_items = [{boxLabel: '把粑粑用废纸包好带回家冲掉', name: 'item', inputValue: 1},
+                {boxLabel: '受污染的报纸按有害垃圾处理', name: 'item', inputValue: 2},
+                {boxLabel: '没受污染的报纸按可回收垃圾处理', name: 'item', inputValue: 3},
+                {boxLabel: '受污染的报纸浸水后当湿垃圾处理', name: 'item', inputValue: 4}]
+            var navHandler = function(direction){
+                var wizard = Ext.getCmp('wizard').layout;
+                var prev = Ext.getCmp('move-prev');
+                var next = Ext.getCmp('move-next');
+                var activeId = wizard.activeItem.id;
+                if (activeId == 'card-0') {
+                    if (direction == 1) {
+                        wizard.setActiveItem(1);
+                        prev.setDisabled(false);
+                    }
+                } else if (activeId == 'card-1') {
+                    if (direction == -1) {
+                        wizard.setActiveItem(0);
+                        prev.setDisabled(true);
+                    } else {
+                        wizard.setActiveItem(2);
+                        var q1_answer = Ext.getCmp('q1').getForm().getValues().garbage;
+                        var q2_answer = Ext.getCmp('q2').getForm().getValues().item;
+                        var q1_answer = q1_items.filter((item) => {
+                            return parseInt(q1_answer) === parseInt(item.inputValue)
+                        })[0]
+                        Ext.getCmp('q1_answer_field').setValue(q1_answer.boxLabel)
+                        answerText = ''
+                        for(let i = 0; i < q2_answer.length; i ++) {
+                            var q2_answer_temp = q2_items.filter((item) => {
+                                return parseInt(q2_answer[i]) === parseInt(item.inputValue)
+                            })[0]
+                            answerText += q2_answer_temp.boxLabel
+                            if (i < q2_answer.length - 1) {
+                                answerText += '，'
+                            }
+                        }
+                        Ext.getCmp('q2_answer_field').setValue(answerText)
+                        next.setDisabled(true);
+                    }
+                } else if (activeId == 'card-2') {
+                    if (direction == -1) {
+                        wizard.setActiveItem(1);
+                        next.setDisabled(false);
+                    }
+                }
+            };
+            var panel = new Ext.Panel({
+                title: '问卷调查',
+                cls: 'my-panel',
+                layout:'fit',
+                width: 700,
+                height: 500,
+                renderTo: test,
+                items:[{
+                    region: 'west',
+                    // split: true,
+                    id: 'wizard',
+                    width: 500,
+                    layout:'card',
+                    activeItem: 0,
+                    bodyStyle: 'padding:15px',
+                    defaults: {
+                        border:false
+                    },
+                    bbar: [{
+                        id: 'move-prev',
+                        text: '上一步',
+                        handler: navHandler.createDelegate(this, [-1]),
+                        disabled: true
+                    }, '->',{
+                        id: 'move-next',
+                        text: '下一步',
+                        handler: navHandler.createDelegate(this, [1])
+                    }],
+                    items: [{
+                        id: 'card-0',
+                        items: [
+                            {
+                                id: 'q1',
+                                xtype:'form',
+                                title: 'Q1:番茄酱属于以下哪种垃圾？（单选）',
+                                defaultType: 'radio',
+                                items: q1_items
+                            }
+                        ]
+                    },{
+                        id: 'card-1',
+                        items: [
+                            {
+                                id: 'q2',
+                                xtype:'form',
+                                title: 'Q50:王大叔出门遛狗后，哪些是正确处理狗粑粑的方法？（多选）',
+                                defaultType: 'checkbox',
+                                items: q2_items
+                            }
+                        ]
+                    },{
+                        id: 'card-2',
+                        items: [
+                            {
+                                id: 'showForm',
+                                layout: 'form',
+                                cls: 'showForm',
+                                defaultType: 'textfield',
+                                labelAlign: 'center',
+                                labelWidth: 100,
+                                frame: true,
+                                width: 500,
+                                items: [{
+                                    id: 'q1_answer_field',
+                                    width: 400,
+                                    fieldLabel: '您的第一题答案'
+                                },
+                                    {
+                                        id: 'q2_answer_field',
+                                        width: 400,
+                                        xtype: 'textarea',
+                                        fieldLabel: '您的第二题答案'
+                                    }],
+                                buttons: [{
+                                    text: 'submit',
+                                    handler: function(btn, form){
+                                        Ext.Msg.alert('Message', 'Congratulations!')
+                                    }
+                                }]
+                            }
+                        ]
+                    }]
+                }]
+            });
+            var navigate = function(panel, direction){
+                var layout = panel.getLayout();
+                layout[direction]();
+                Ext.getCmp('move-prev').setDisabled(!layout.getPrev());
+                Ext.getCmp('move-next').setDisabled(!layout.getNext());
+            };
+        });
+    </script>
+    <style>
+        .my-panel{
+            margin: 100px auto;
+        }
+        .showForm{
+            margin: 100px auto;
+        }
+    </style>
+</head>
+<body>
+<div id="page">
+    <div id="test"></div>
+</div>
+</body>
+</html>

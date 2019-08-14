@@ -1,0 +1,202 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Tree3</title>
+    <link rel="stylesheet" type="text/css" href="./resources/css/ext-all.css" />
+    <link rel="stylesheet" type="text/css" href="./resources/css/examples.css" />
+    <!-- LIBS -->
+    <script type="text/javascript" src="./js/ext-base.js"></script>
+    <!-- ENDLIBS -->
+    <script type="text/javascript" src="./js/ext-all.js"></script>
+    <script type="text/javascript" src="./js/examples.js"></script>
+    <script>
+        Ext.onReady(function() {
+            var menu = new Ext.menu.Menu({
+                items: [{
+                    id: 'Reset',
+                    text: 'Reset'
+                },{
+                    id: 'Table',
+                    text: 'Table'
+                }],
+                listeners: {
+                    itemclick: function(item) {
+                        switch (item.id) {
+                            case 'Reset':
+                                Ext.getCmp('content').reset();
+                                break;
+                            case 'Table':
+                                Ext.Msg.prompt("Add Table","please input the Rows and Cols",function (btn, text) {
+                                    if(btn=='ok'){
+                                        let row = parseInt(text.substring(0,1));
+                                        console.log(row);
+                                        let col = parseInt(text.substring(1));
+                                        console.log(col);
+                                        for(let i = 0; i<row ; i++){
+                                            tplData.push({name:'a',wage:1000});
+                                        }
+                                        tplData = createarray(row,col)
+                                        tpl.overwrite(panel2.body, tplData);
+
+                                    }
+                                    else{}
+                                },this,true);
+                                break;
+
+                        }
+                    }
+                }
+            });
+            function createarray( row , col ) {
+                var m = 0;
+                var array01 = [];
+                for(var i = 0;i<row;i++){
+                    var subArray = [];
+                    for(var j = 0 ; j<col ; j++){
+                        subArray.push(m++);
+                    }
+                    array01.push(subArray)
+                }
+                return array01;
+
+            }
+            var tpl=new Ext.XTemplate(
+                '<table border=1 class=title>',
+
+                '<tpl for="values">',
+
+                '<tr>',
+
+                '<tpl for="values">',
+                '<td>{.}</td>',
+
+                '</tpl>',
+
+                '</tr>',
+
+                '</tpl>',
+                '</table>'
+            ) ;
+
+            var tplData=[];
+
+            var panel = new Ext.Panel({
+                renderTo: 'test',
+                title: 'Reply Bolg',
+                draggable: true,
+                collapsible: true,
+                width: 600,
+                height: 200,
+                // tpl: tpl,
+                // data: tplData,
+                tbar:{
+                    width: 600,
+                    items: [
+                        {
+                            text: "Edit",
+                            width: 50,
+                            menu:
+                                {
+                                    items: [
+                                        {
+                                            text: 'Reset',
+                                            listeners : {
+                                                'click' : function(){
+                                                    Ext.getCmp('content').reset()
+                                                }
+                                            }
+                                        }
+                                    ]
+                                },
+                        },'-',{
+                            text: "Insert",
+                            width: 50,
+                            menu:
+                                {
+                                    items: [
+                                        {
+                                            text: 'Table',
+                                            listeners : {
+                                                'click' : function(){
+                                                    Ext.Msg.prompt("Add Table","please input the Rows and Cols",function (btn, text) {
+                                                        if(btn=='ok'){
+                                                            let row = parseInt(text.substring(0,1));
+                                                            console.log(row);
+                                                            let col = parseInt(text.substring(1));
+                                                            console.log(col);
+                                                            for(let i = 0; i<row ; i++){
+                                                                tplData.push({name:'a',wage:1000});
+                                                            }
+                                                            tplData = createarray(row,col)
+                                                            tpl.overwrite(panel2.body, tplData);
+
+                                                        }
+                                                        else{}
+                                                    },this,true);
+                                                }
+                                            }
+                                        }
+                                    ]
+                                },
+                        }
+                    ]
+                },
+                items:[
+                    {
+                        xtype: 'textarea',
+                        id: 'content',
+                        width: 600,
+                        height: 200,
+                    },
+
+                ],
+            });
+            var panel2 = new Ext.Panel({
+                renderTo: 'test2',
+                width: 600,
+                tpl: tpl,
+                data: tplData,
+                buttons:[
+                    {
+                        text : 'Reply',
+                        id: 'button',
+                        disabled: false,
+                        listeners : {
+                            'click' : function(){
+                                Ext.getCmp("button").disabled = true;
+                                Ext.getCmp('content').reset();
+                                tplData = [];
+                                tpl.overwrite(panel2.body, tplData);
+                                Ext.example.msg('提示', 'Success');
+
+                            }
+                        }
+                    },
+                ],
+            });
+
+            Ext.get(document).on('contextmenu', function(e){
+                e.preventDefault();
+                menu.showAt(e.getXY());
+            });
+
+        });
+    </script>
+    <style type="text/css">
+        .add {
+            background: url(images/1.png) left top no-repeat;
+        }
+        .even{
+            background-color: #1b376c;
+        }
+        .odd{
+            background-color: #7e5530;
+        }
+    </style>
+</head>
+<body>
+<div id="test"></div>
+<div id="test2"></div>
+</body>
+</html>

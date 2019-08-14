@@ -1,0 +1,239 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=gbk">
+    <link rel="stylesheet" type="text/css" href="./resources/css/ext-all.css" />
+    <link rel="stylesheet" type="text/css" href="./resources/css/examples.css" />
+    <!-- LIBS -->
+    <script type="text/javascript" src="./js/ext-base.js"></script>
+    <!-- ENDLIBS -->
+    <script type="text/javascript" src="./js/ext-all.js"></script>
+    <script type="text/javascript" src="./js/PagingMemoryProxy.js"></script>
+    <script type="text/javascript" src="./js/examples.js"></script>
+    <title>03.grid</title>
+    <style type="text/css">
+
+    </style>
+    <script type="text/javascript">
+        Ext.onReady(function(){
+            function renderSex(value) {
+                if (value == 0) {
+                    return "<span style='color:red;font-weight:bold;'>男</span>";
+                } else if(value == 1){
+                    return "<span style='color:green;font-weight:bold;'>女</span>";
+                }else{
+                    return "";
+                }
+            }
+            function renderAvatar() {
+                return "<img src='images/1.png'/>";
+            }
+
+            const adjustRowSequence = function (x) {
+                const record = grid.getSelectionModel().getSelected()
+                const index = grid.getSelectionModel().last
+                store.remove(record)
+                switch (x) {
+                    case 'First':
+                        store.insert(0, record)
+                        break
+                    case 'last':
+                        store.insert(store.totalLength - 1, record)
+                        break
+                    default:
+                        if(index==0) x=0;
+                        store.insert(index + x, record)
+                        break
+                }
+            }
+
+            const menu = new Ext.menu.Menu({
+                items: [{
+                    id: 'Up',
+                    text: 'Up'
+                },{
+                    id: 'Down',
+                    text: 'Down'
+                },{
+                    id: 'First',
+                    text: 'First'
+                },{
+                    id: 'Last',
+                    text: 'Last'
+                }],
+                listeners: {
+                    itemclick: function(item) {
+                        switch (item.id) {
+                            case 'Up':
+                                adjustRowSequence(-1);
+                                break;
+                            case 'Down':
+                                adjustRowSequence(1);
+                                break;
+                            case 'First':
+                                adjustRowSequence('First');
+                                break;
+                            case 'Last':
+                                adjustRowSequence('Last');
+                                break;
+
+                        }
+                    }
+                }
+            });
+
+            const PersonRecord = Ext.data.Record.create([
+                {name: 'name', type: 'string'},
+                {name: 'class', type: 'string'},
+                {name: 'sex', type: 'int'},
+                {name: 'age', type: 'int'},
+                {name: 'birthday', type: 'date' ,},
+                {name: 'avatar', type: 'string'},
+            ]);
+
+            const data = [
+                ['Dillon1','Class1',0,22,'1970-01-15','1.png'],
+                ['Dillon2','Class1',1,24,'1970-01-15','1.png'],
+                ['James1','Class2',0,21,'1970-01-15','1.png'],
+                ['James2','Class2',1,22,'1970-01-15','1.png'],
+            ];
+
+            const classComboData = [
+                ['Class1', 'Class1'],
+                ['Class2', 'Class2']
+            ]
+
+            const store = new Ext.data.GroupingStore({
+                proxy: new Ext.data.PagingMemoryProxy(data),
+                reader: new Ext.data.ArrayReader({}, PersonRecord),
+                groupField: 'class',
+                sortInfo: {field: 'name', direction: "ASC"}
+            });
+            store.load();
+
+            const sm = new Ext.grid.CheckboxSelectionModel();  //添加选择框
+
+            const grid = new Ext.grid.EditorGridPanel({
+                store: store,
+                columns: [
+                    new Ext.grid.RowNumberer(),
+                    sm,
+                    {
+                        header: 'name',
+                        dataIndex: 'name',
+                        editor: new Ext.grid.GridEditor(
+                            new Ext.form.TextField({
+                                allowBlank: false
+                            })
+                        ),
+                        sortable:true
+                    },
+                    {
+                        header: 'class',
+                        dataIndex: 'class',
+                        editor: new Ext.grid.GridEditor(new Ext.form.ComboBox({
+                            store: new Ext.data.SimpleStore({
+                                fields: ['value', 'text'],
+                                data: classComboData
+                            }),
+                            mode: 'local',
+                            triggerAction: 'all',
+                            valueField: 'value',
+                            displayField: 'text'
+                        })),
+                        sortable:true
+                    },
+                    {
+                        header: 'sex',
+                        dataIndex: 'sex',
+                        editor: new Ext.grid.GridEditor(
+                            new Ext.form.TextField({
+                                allowBlank: false
+                            })
+                        ),
+                        renderer:renderSex
+                    },
+                    {
+                        header: 'age',
+                        dataIndex: 'age',
+                        editor: new Ext.grid.GridEditor(
+                            new Ext.form.TextField({
+                                allowBlank: false
+                            })
+                        )
+                    },
+                    {
+                        header: 'birthday',
+                        dataIndex: 'birthday',
+                        editor: new Ext.grid.GridEditor(
+                            new Ext.form.DateField({
+                                allowBlank: false
+                            })
+                        ),
+                        renderer: Ext.util.Format.dateRenderer('Y-m-d')
+                    },
+                    {
+                        header: 'avatar',
+                        dataIndex: 'avatar',
+                        renderer:renderAvatar
+                    },
+
+                ],
+                view: new Ext.grid.GroupingView(),
+                autoHeight: true,
+                renderTo: 'grid',
+                sm: sm,   //这里也必须配置，如果只在表头columns属性中配置的话，checkbox将无法勾选
+                tbar: new Ext.Toolbar(['-', {
+                    text: 'Add',
+                    handler: function() {
+                        const row = new Ext.data.Record({
+                            name:'', //这里是和ColumnModel里面的dataIndex相互对应的
+                            class:'',
+                            sex:'2',
+                            age:'',
+                            birthday:'',
+                            avatar: ''
+                        });
+                        grid.stopEditing();
+                        const rowNumber = grid.getSelectionModel().last
+                        if(rowNumber==false){
+                            store.insert(0, row);
+                        }else{
+                            store.insert(rowNumber, row);
+                        }
+                        grid.startEditing(0, 0);  //激活该行的编辑状态
+                    }
+                }, '-', {
+                    text: 'Delete',
+                    handler: function() {
+                        Ext.Msg.confirm('信息', '确定要删除', function(btn) {
+                            if(btn == 'yes') {
+                                const records = grid.getSelectionModel().getSelections()
+                                records.forEach(x => store.remove(x))
+                            }
+                        })
+                    }
+                }]),
+                bbar: new Ext.PagingToolbar({
+                    cls: 'rightPage',
+                    pageSize: 2,
+                    store: store,
+                    displayInfo: true,
+                    displayMsg: '显示第 {0} 条到 {1} 条记录，一共 {2} 条',
+                    emptyMsg: '没有记录'
+                })
+
+            });
+            grid.on("rowcontextmenu", function(grid, rowIndex, e){
+                e.preventDefault();
+                grid.getSelectionModel().selectRow(rowIndex);
+                menu.showAt(e.getXY());
+            });
+
+
+        });
+    </script>
+</head>
+<body>
+<div id="grid"></div>
+</body>
+</html>

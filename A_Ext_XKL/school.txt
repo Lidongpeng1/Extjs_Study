@@ -1,0 +1,12 @@
+[
+    {text:'一班',"id": 1,children:[
+        {text:'Tom1',"id": 2, leaf: true,checked: false},
+        {text:'Tom2',"id": 3, leaf: true,checked: false},
+        {text:'Tom3',"id": 4, leaf: true,checked: false}
+    ]},
+    {text:'二班',"id": 5,children:[
+        {text:'Peter1', "id": 6,leaf: true,checked: false},
+        {text:'Peter2', "id": 7,leaf: true,checked: false},
+        {text:'Peter3', "id": 8,leaf: true,checked: false}
+    ]}
+]

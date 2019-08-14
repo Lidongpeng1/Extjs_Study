@@ -1,0 +1,261 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Blog</title>
+    <link rel="stylesheet" href="./resources/css/ext-all.css">
+
+    <script type="text/javascript" src="./js/ext-base.js"></script>
+    <script type="text/javascript" src="./js/ext-all.js"></script>
+    <script>
+        Ext.onReady(function () {
+            Ext.QuickTips.init();
+            var data = []
+            var tpl = new Ext.XTemplate(
+                '<table>',
+                '<tpl for="values">',
+                '<tr>',
+                '<tpl for="values">',
+                '<td> {.} </td>',
+                '</tpl>',
+                '</tr>',
+                '</tpl>',
+                '</table>'
+            );
+            var panel = new Ext.Panel({
+                title: 'Table',
+                cls: 'table-panel',
+                shadow: true,
+                draggable: true,
+                collapsible: true,
+                width: '60%',
+                height: 150,
+                autoScroll: true
+            })
+            //菜单对象
+            var editMenu = new Ext.menu.Menu({
+                items:[
+                    {
+                        text:"Reset",
+                        iconCls: 'reset-icon',
+                        listeners: {
+                            'click': function (el) {
+                                Ext.getCmp('contentField').reset()
+                            }
+                        }
+                    }
+                ]
+            });
+            var insertMenu = new Ext.menu.Menu({
+                items:[
+                    {
+                        text:"Table",
+                        iconCls: 'table-icon',
+                        listeners: {
+                            'click': function (el) {
+                                var w=new Ext.Window({
+                                    width:300,
+                                    height:200,
+                                    minimizable: true,  //最小化
+                                    maximizable: true, //最大化
+                                    items: new Ext.form.FormPanel({
+                                        id: 'fs',
+                                        labelAlign: 'right',  //标签位置
+                                        labelWidth: 50,       //标签宽度
+                                        width: '100%',
+                                        height: 170,
+                                        buttonAlign: 'center',
+                                        frame: true,
+                                        items: [{
+                                            layout: 'column',   //布局方式
+                                            items: [{
+                                                columnWidth: .99,  //列宽
+                                                xtype: 'fieldset',
+                                                checkboxToggle: true,
+                                                title: '',
+                                                autoHeight: true,
+                                                defaults: {width: 300},
+                                                defaultType: 'numberfield',  //默认类型
+                                                items: [{
+                                                    id: 'rowField',
+                                                    fieldLabel: 'row',
+                                                    msgTarget: 'title',
+                                                    name: 'rowField'
+                                                },{
+                                                    id: 'columnField',
+                                                    fieldLabel: 'column',
+                                                    msgTarget: 'title',
+                                                    name: 'columnField'
+                                                }
+                                                ]
+                                            }]
+                                        }],
+                                        buttons: [{
+                                            text: 'generate',
+                                            handler: function(btn, form){
+                                                let row = Ext.getCmp('rowField').getValue()
+                                                let column = Ext.getCmp('columnField').getValue()
+                                                data = fillArray(row, column)
+                                                tpl.overwrite(panel.body, data);
+                                                w.close()
+                                            }
+                                        }, {
+                                            text: 'reset',
+                                            handler: function(btn, form){
+                                                Ext.getCmp('fs').form.reset()
+                                            }
+                                        }]
+                                    }),
+                                    plain:true,//true则主体背景透明，false则主体有小差别的背景色，默认为false
+                                    title:"Table"
+                                });
+                                w.show();
+                            }
+                        }
+                    }
+                ]
+            });
+            var contextMenu = new Ext.menu.Menu({
+                items: [
+                    {
+                        text:"Edit",
+                        iconCls: 'edit-icon',
+                        menu:editMenu
+                    },
+                    {
+                        text:"Insert",
+                        iconCls: 'insert-icon',
+                        menu:insertMenu
+                    }
+                ]
+            });
+            var mypanel = new Ext.Panel({
+                renderTo: test,
+                width:'100%',
+                height:700,
+                title:"Blog",
+                items: [
+                    panel,
+                    {
+                        columnWidth: .99,  //列宽
+                        cls: 'center-fieldset',
+                        xtype: 'fieldset',
+                        checkboxToggle: true,
+                        autoHeight: true,
+                        defaults: {width: '90%'},
+                        defaultType: 'textarea',  //默认类型
+                        items: [{
+                            id: 'contentField',
+                            fieldLabel: 'Reply Content',
+                            msgTarget: 'title',
+                            enableKeyEvents: true,
+                            name: 'contentField',
+                            listeners : {
+                                keyup : function(field, e){
+                                    Ext.getCmp('reply-btn').setDisabled(Ext.isEmpty(field.getValue()))
+                                }
+                            }
+                        }],
+                        buttons: [{
+                            id: 'reply-btn',
+                            text: 'reply',
+                            cls: 'reply-btn',
+                            disabled: true,
+                            handler: function(btn, form){
+                                var runner = new Ext.util.TaskRunner();
+                                var count = 0;
+                                Ext.MessageBox.progress('Waiting' ,'loading……');
+                                var task = {
+                                    run: function() {
+                                        if (count > 3) {
+                                            Ext.MessageBox.hide()
+                                            Ext.getCmp('contentField').reset()
+                                            Ext.getCmp('reply-btn').setDisabled(true)
+                                            Ext.Msg.alert('Congratulations', 'success')
+                                            return false
+                                        }
+                                        Ext.MessageBox.updateProgress(count/3, Math.floor(count/3 * 100) + '%');
+                                        count ++
+                                    },
+                                    interval: 1000
+                                }
+                                runner.start(task);
+                            }
+                        }]
+                    }
+                ],
+                contextMenu: contextMenu,
+                //头部工具栏
+                tools:[
+                    {id:"save",qtip:"保存"},
+                    {id:"help",qtip:"帮助"},
+                    {id:"close",qtip:"关闭"}
+                ],
+                //工具栏
+                tbar:new Ext.Toolbar({
+                    width:300,
+                    height:25
+                })
+            });
+            Ext.getDoc().on('contextmenu', function (e) {
+                e.preventDefault();
+                contextMenu.showAt(e.getXY());
+            });
+            mypanel.getTopToolbar().add(new Ext.Toolbar.Button({text:"Edit", iconCls: 'edit-icon', menu:editMenu}));
+            mypanel.getTopToolbar().add(new Ext.Toolbar.Spacer());
+            mypanel.getTopToolbar().add(new Ext.Toolbar.Separator());
+            mypanel.getTopToolbar().add(new Ext.Toolbar.Button({text:"Insert", iconCls: 'insert-icon', menu:insertMenu}));
+            function fillArray(row, column) {
+                let resultArray = []
+                let count = 1
+                for (let i = 0; i < row; i ++) {
+                    resultArray[i]=[]
+                    for (let j = 0; j < column; j ++) {
+                        resultArray[i][j] = count
+                        count ++
+                    }
+                }
+                return resultArray
+            }
+        })
+    </script>
+    <style>
+        .save-icon{
+            background-image:url(images/save.png) !important;
+        }
+        .save-as-icon{
+            background-image:url(images/save-as.png) !important;
+        }
+        .file-icon{
+            background-image:url(images/file.png) !important;
+        }
+        .edit-icon{
+            background-image:url(images/edit.png) !important;
+        }
+        .insert-icon{
+            background-image:url(images/insert.png) !important;
+        }
+        .reset-icon{
+            background-image:url(images/reset.png) !important;
+        }
+        .table-icon{
+            background-image:url(images/table.png) !important;
+        }
+        .center-fieldset{
+            width: 60%;
+            margin: 100px auto;
+        }
+        .table-panel{
+            margin: 50px auto;
+        }
+        .reply-btn{
+            margin-right: 60px;
+        }
+    </style>
+</head>
+<body>
+<div id="page">
+    <div id="test"></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Form</title>
+    <link rel="stylesheet" type="text/css" href="./resources/css/ext-all.css" />
+    <link rel="stylesheet" type="text/css" href="./resources/css/examples.css" />
+    <!-- LIBS -->
+    <script type="text/javascript" src="./js/ext-base.js"></script>
+    <!-- ENDLIBS -->
+    <script type="text/javascript" src="./js/ext-all.js"></script>
+    <script type="text/javascript" src="./js/examples.js"></script>
+    <script>
+
+        // 复习内容：
+        // form表单取值问题
+        // let obj = Ext.getCmp('testForm').getForm().getValues()的结果是一个对象，可以通过obj.name值的方式获取值
+
+        Ext.onReady(function() {
+            var form = new Ext.form.FormPanel({
+                id: 'testForm',
+                renderTo : 'test',
+                title: 'simple form',
+                labelAlign : 'top',
+                frame: true,
+                width: 400,
+                defaults: {width: 400},
+                defaultType: 'textfield',
+                items: [
+                    {
+                        fieldLabel: 'First Name',
+                        name: 'first',
+                        allowBlank:false,
+                    },{
+                        fieldLabel: 'Last Name',
+                        name: 'last',
+                    },{
+                        fieldLabel: 'Company',
+                        name: 'company',
+                    }, {
+                        fieldLabel: 'Email',
+                        name: 'email',
+                        vtype:'email'
+                    }
+                ],
+                buttons:[{
+                    text: 'submit',
+                    listeners:{
+                        'click': function(btn, form){
+                            let values = Ext.getCmp('testForm').getForm().getValues();
+                            console.log(values);
+                            // console.log(Ext.getCmp('testForm').items.items)
+                            Ext.example.msg('Settings Saved', 'Hello World!'+values.first);
+                        }}
+                },{
+                    text: 'reset',
+                    listeners:{
+                        'click': function(btn, form){
+                            Ext.getCmp('nameField').reset();
+                        }}
+                }]
+
+            });
+
+        });
+    </script>
+</head>
+<body>
+<div id="test"></div>
+</body>
+</html>

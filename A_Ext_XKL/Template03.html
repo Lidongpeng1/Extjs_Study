@@ -1,0 +1,70 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Customize Component</title>
+    <link rel="stylesheet" type="text/css" href="./resources/css/ext-all.css" />
+    <link rel="stylesheet" type="text/css" href="./resources/css/examples.css" />
+    <!-- LIBS -->
+    <script type="text/javascript" src="./js/ext-base.js"></script>
+    <!-- ENDLIBS -->
+    <script type="text/javascript" src="./js/ext-all.js"></script>
+    <script type="text/javascript" src="./js/examples.js"></script>
+    <style type="text/css">
+    </style>
+    <script>
+        Ext.onReady(function() {
+
+            var tpl=new Ext.XTemplate(
+                '<table border=1 class=title>',
+                '<tr><td>序号</td><td>姓名</td><td>工资</td><td>奖金</td></tr>',
+                '<tpl for="emps">',
+
+                '<tr class="{[xindex % 2==0? "even":"odd" ]}">',
+                '<td>{[xindex]}</td><td>{[values.name]}</td>',
+                '<td>{[values.wage*parent.per]}</td>',
+                '<td>{[Math.round(values.wage*parent.per/xcount)]}</td></tr>',
+
+                '</tpl>',
+                '<tr><td>发薪时间</td><td colspan=3>{[fm.date(new Date,"Y年m月d日")]}</td></tr>',
+                '<tr><td>工资总计</td><td colspan=3>  </td></tr>',
+                '</table>'
+            ) ;
+
+
+            var tplData={
+                per:0.9,
+                emps:[
+                    {name:'a',wage:1000},
+                    {name:'b',wage:200},
+                    {name:'c',wage:100},
+                    {name:'d',wage:10},
+                    {name:'e',wage:897},
+                    {name:'f',wage:110}
+                ]
+            };
+            // tpl.append('tmp',tplData);   //???
+
+            var panel = new Ext.Panel({
+                renderTo: 'test',
+                tpl: tpl,
+                data: tplData,
+
+            });
+            panel.render();
+
+        });
+    </script>
+    <style type="text/css">
+      .even{
+          background-color: #1b376c;
+      }
+      .odd{
+          background-color: #7e5530;
+      }
+    </style>
+</head>
+<body>
+<div id="test"></div>
+</body>
+</html>

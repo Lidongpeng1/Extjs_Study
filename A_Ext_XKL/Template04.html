@@ -1,0 +1,56 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Customize Component</title>
+    <link rel="stylesheet" type="text/css" href="./resources/css/ext-all.css" />
+    <link rel="stylesheet" type="text/css" href="./resources/css/examples.css" />
+    <!-- LIBS -->
+    <script type="text/javascript" src="./js/ext-base.js"></script>
+    <!-- ENDLIBS -->
+    <script type="text/javascript" src="./js/ext-all.js"></script>
+    <script type="text/javascript" src="./js/examples.js"></script>
+    <style type="text/css">
+    </style>
+    <script>
+        Ext.onReady(function() {
+
+            var tpl=new Ext.XTemplate(
+                '<table border=1 class=title>',
+
+                '<tpl for="values">',
+
+                '<tr>',
+
+                '<tpl for="values">',
+                '<td>{.}</td>',
+
+                '</tpl>',
+
+                '</tr>',
+
+                '</tpl>',
+                '</table>'
+            ) ;
+
+
+            var tplData=[[1,2,3],[4,5,6],[7,8,9]];
+            // tpl.append('tmp',tplData);   //???
+
+            var panel = new Ext.Panel({
+                renderTo: 'test',
+                tpl: tpl,
+                data: tplData,
+
+            });
+            panel.render();
+
+        });
+    </script>
+    <style type="text/css">
+    </style>
+</head>
+<body>
+<div id="test"></div>
+</body>
+</html>

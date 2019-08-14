@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>QuickStart</title>
+	<link rel="stylesheet" type="text/css" href="./resources/css/ext-all.css" />
+ 	<!-- LIBS -->
+ 	<script type="text/javascript" src="./js/ext-base.js"></script>
+ 	<!-- ENDLIBS -->
+    <script type="text/javascript" src="./js/ext-all.js"></script>
+	<script>
+        
+		Ext.onReady(function() {
+			var container = new Ext.Container({
+				renderTo: 'test',
+				layout: 'table',
+				layoutConfig: {
+					columns: 2
+				},
+				items: [{
+					colspan: 1,
+					width: 200,
+					layout: 'hbox',
+					layoutConfig: {pack: 'center'},
+					xtype: 'container',
+					items: [{
+						xtype: 'box',
+						height: 80,
+						autoEl: {
+							tag: 'img',
+							src: 'bing.jpg'
+						}
+					}]
+				},{
+                    xtype: 'tabpanel',
+					colspan: 1,
+					width: 600,
+					height: 80,
+					activeTab: 0,
+				    items:[
+				        {
+				        	title:'国内版',
+				        	xtype: 'field',
+				        	width: 600,
+				        	height: 50,
+				     //    	items:[{
+         //                       xtype: 'box',
+						   //     height: 40,
+							  //  autoEl: {
+								 //    tag: 'img',
+									// src: '2.png'
+							  //  }
+				     //    	}]
+				        },
+				        {
+				        	title:'国际版',
+				        	xtype: 'field',
+				        	width: 600,
+				        	height: 50,
+				     //    	items:[{
+         //                       xtype: 'box',
+						   //     height: 40,
+							  //  autoEl: {
+								 //    tag: 'img',
+									// src: '2.png'
+							  //  }
+				     //    	}]
+				        },
+				    ]
+				}]
+		    });
+		});
+	</script>
+	<style type="text/css">
+		.img{
+          height: 40px;
+          width: 40px;
+          display: block;
+          float: right;
+		}
+	</style>
+</head>
+<body>
+    <div id="test"></div>
+	<div id="tab1" class="x-hide-display"><img src="2.png" class="img"></div>
+    <div id="tab2" class="x-hide-display"><img src="2.png" class="img"></div>
+</body>
+</html>

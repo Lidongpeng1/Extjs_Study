@@ -1,0 +1,163 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <title>Student Management System</title>
+    <link rel="stylesheet" type="text/css" href="./resources/css/ext-all.css" />
+    <script type="text/javascript" src="./js/ext-base.js"></script>
+    <script type="text/javascript" src="./js/ext-all-debug.js"></script>
+    <script type="text/javascript" src="localXHR.js"></script>
+    <script>
+        Ext.onReady(function () {
+            var form = new Ext.form.FormPanel({
+                labelAlign: 'top', //??????(fieldLabel?)??
+                // frame:true, //??????????
+                id : 'review-form-01',
+                // renderTo : 'test',
+                width : 800,
+                title : 'Form01',
+                // layout : 'form',
+                bodyStyle:'padding:5px',//???Panel?????
+                items : [
+                    {
+                        layout : 'column',
+                        border:false,//????,???????????
+                        items : [
+                            {
+                                columnWidth:.5,
+                                layout: 'form',
+                                border:false,//????,???????????
+                                items : [
+                                    {
+                                        xtype : 'textfield',
+                                        fieldLabel : 'First Name',
+                                        allowBlank:false,
+                                        msgTarget: 'title',
+                                        anchor:'95%'
+                                    },{
+                                        xtype : 'textfield',
+                                        // inputType: 'password',//???????
+                                        fieldLabel : 'company',
+                                        allowBlank:false,
+                                        msgTarget: 'title',
+                                        anchor:'95%'
+                                    }
+                                ]
+
+                            },{
+                                columnWidth:.5,
+                                layout: 'form',
+                                border:false,//????,???????????
+                                items : [
+                                    {
+                                        xtype : 'textfield',
+                                        fieldLabel : 'Last Name',
+                                        allowBlank:false,
+                                        msgTarget: 'title',
+                                        name : 'last',
+                                        anchor:'95%'
+                                    },{
+                                        xtype : 'textfield',
+                                        fieldLabel : 'Email',
+                                        allowBlank:false,
+                                        name : 'email',
+                                        vtype : 'email',//vtype???
+                                        msgTarget: 'title',
+                                        anchor:'95%'
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        xtype : 'tabpanel',
+                        activeTab: 0,
+                        plain:true,
+                        height:250,//tabpanel???????????????????????????????????????
+                        // deferredRender: false,//????
+                        defaults:{bodyStyle:'padding:10px'},
+                        items : [
+                            {
+                                layout : 'form',
+                                title : 'Personal Details',
+                                defaultType: 'textfield',
+                                defaults: {width: 400},
+                                items : [
+                                    {
+                                        fieldLabel: 'First Name',
+                                        name: 'first',
+                                        allowBlank:false,
+                                        value: 'Jack'  //?????
+                                    },{
+                                        fieldLabel: 'Last Name',
+                                        name: 'last',
+                                        value: 'Slocum'
+                                    },{
+                                        fieldLabel: 'Company',
+                                        name: 'company',
+                                        value: 'Ext JS'
+                                    },{
+                                        fieldLabel: 'Email',
+                                        name: 'email',
+                                        vtype:'email'
+                                    }
+                                ]
+                            },{
+                                title:'Phone Numbers',
+                                layout:'form',
+                                defaults: {width: 230},
+                                defaultType: 'textfield',
+                                items: [{
+                                    fieldLabel: 'Home',
+                                    name: 'home',
+                                    value: '(888) 555-1212'
+                                },{
+                                    fieldLabel: 'Business',
+                                    name: 'business'
+                                },{
+                                    fieldLabel: 'Mobile',
+                                    name: 'mobile'
+                                },{
+                                    fieldLabel: 'Fax',
+                                    name: 'fax'
+                                }]
+                            },{
+                                cls:'x-plain',
+                                title:'Biography',
+                                layout:'fit',
+                                items: {
+                                    xtype:'htmleditor',
+                                    id:'bio2',
+                                    fieldLabel:'Biography'
+                                }
+                            }
+                        ]
+                    }
+                ],
+                buttons : [
+                    {
+                        text : 'save',
+                        listeners : {
+                            'click' : function(){
+                               Ext.Msg.alert('Greet','save it!')
+                            }
+                        }
+                    },{
+                        text : 'cancel',
+                        listeners : {
+                            'click' : function(){
+                                Ext.getCmp('review-form-01').reset()
+                            }
+                        }
+                    }
+                ]
+
+            })
+            form.render(document.body);
+
+        });
+    </script>
+</head>
+<body>
+</body>
+</html>

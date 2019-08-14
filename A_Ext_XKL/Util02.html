@@ -1,0 +1,49 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Customize Component</title>
+    <link rel="stylesheet" type="text/css" href="./resources/css/ext-all.css" />
+    <link rel="stylesheet" type="text/css" href="./resources/css/examples.css" />
+    <!-- LIBS -->
+    <script type="text/javascript" src="./js/ext-base.js"></script>
+    <!-- ENDLIBS -->
+    <script type="text/javascript" src="./js/ext-all.js"></script>
+    <script type="text/javascript" src="./js/examples.js"></script>
+    <style type="text/css">
+        .add {
+            background: url(images/1.png) left top no-repeat;
+        }
+    </style>
+    <script>
+        Ext.onReady(function() {
+            //query
+            // Ext.query('p').forEach(function (domElement) {
+            //     Ext.get(domElement).highlight();
+            // })
+            // Ext.query('html/body/div/span').forEach(function (domElement) {
+            //     Ext.get(domElement).highlight();
+            // })
+
+            //select
+            // Ext.select('p').highlight();
+            Ext.select('html/body/div/span').highlight();
+
+        });
+    </script>
+    <style type="text/css">
+
+    </style>
+</head>
+<body>
+<p>p1</p>
+<br>
+<div>1236</div>
+<br>
+<div>258</div>
+<br>
+<p>p2</p>
+<br>
+<div><span>ddd</span><span>1582</span></div>
+</body>
+</html>

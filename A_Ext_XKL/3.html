@@ -1,0 +1,147 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Form</title>
+    <link rel="stylesheet" type="text/css" href="./resources/css/ext-all.css" />
+    <link rel="stylesheet" type="text/css" href="./resources/css/examples.css" />
+    <!-- LIBS -->
+    <script type="text/javascript" src="./js/ext-base.js"></script>
+    <!-- ENDLIBS -->
+    <script type="text/javascript" src="./js/ext-all.js"></script>
+    <script type="text/javascript" src="./js/examples.js"></script>
+    <script>
+        Ext.onReady(function() {
+            var navHandler = function (direction) {
+                var wizard = Ext.getCmp('wizard').layout
+                var prev = Ext.getCmp('move-prev')
+                var next = Ext.getCmp('move-next')
+                var submit = Ext.getCmp('submit')
+                var activeId = wizard.activeItem.id
+                if (activeId === 'card-0') {
+                    if (direction === 1) {
+                        wizard.setActiveItem(1)
+                        prev.setDisabled(false)
+                    }
+                } else if (activeId === 'card-1') {
+                    if (direction === -1) {
+                        wizard.setActiveItem(0)
+                        prev.setDisabled(true)
+                    } else {
+                        let result = ''
+                        let answer = Ext.getCmp('card-0').getForm().getValues().answer
+                        result += `Q1: ${answer ? answer : '未完成'}\n`
+                        answer = Ext.getCmp('card-1').getForm().getValues().answer
+                        if (typeof answer === 'object')
+                            result += `Q2: ${answer.join('\n')}\n`
+                        else
+                            result += `Q2: ${answer ? answer : '未完成'}\n`
+                        Ext.getCmp('result').setValue(result)
+                        wizard.setActiveItem(2)
+                        next.hide()
+                        submit.show()
+                    }
+                } else if (activeId === 'card-2') {
+                    if (direction === -1) {
+                        wizard.setActiveItem(1)
+                        next.show()
+                        submit.hide()
+                    }
+                }
+            }
+            var panel = new Ext.Panel({
+                layout: 'fit',
+                items: [{
+                    id: 'wizard',
+                    width: 500,
+                    layout: 'card',
+                    activeItem: 0,
+                    bodyStyle: 'padding:15px',
+                    defaults: {
+                        border: false
+                    },
+                    bbar: [{
+                        id: 'move-prev',
+                        text: '上一步',
+                        handler: navHandler.createDelegate(this, [-1]),
+                        disabled: true
+                    }, '->', {
+                        id: 'move-next',
+                        text: '下一步',
+                        handler: navHandler.createDelegate(this, [1])
+                    }, {
+                        id: 'submit',
+                        text: '提交',
+                        hidden: true,
+                        listeners: {
+                            'click': function (btn, form) {
+                                Ext.Msg.alert('提醒', '恭喜完成！')
+                            }
+                        }
+                    }],
+                    items: [{
+                        id: 'card-0',
+                        xtype: 'form',
+                        layout: 'vbox',
+                        items: [{
+                            xtype: 'label',
+                            text: 'Q1: 番茄酱属于以下哪种垃圾？（单选）'
+                        }, {
+                            xtype: 'radiogroup',
+                            id: 'question-1',
+                            columns: 1,
+                            items: [
+                                {boxLabel: '湿垃圾', name: 'answer', inputValue: '湿垃圾'},
+                                {boxLabel: '干垃圾', name: 'answer', inputValue: '干垃圾'},
+                                {boxLabel: '有害垃圾', name: 'answer', inputValue: '有害垃圾'},
+                                {boxLabel: '可回收物', name: 'answer', inputValue: '可回收物'}
+                            ]
+                        }]
+                    }, {
+                        id: 'card-1',
+                        xtype: 'form',
+                        layout: 'vbox',
+                        items: [{
+                            xtype: 'label',
+                            width: '100%',
+                            text: 'Q2: 王大叔出门遛狗后，哪些是正确处理狗粑粑的方法？（多选）'
+                        }, {
+                            xtype: 'checkboxgroup',
+                            id: 'question-2',
+                            columns: 1,
+                            items: [
+                                {boxLabel: '把粑粑用废报纸包好带回家冲掉', name: 'answer', inputValue: '把粑粑用废报纸包好带回家冲掉'},
+                                {boxLabel: '受污染的报纸按有害垃圾处理', name: 'answer', inputValue: '受污染的报纸按有害垃圾处理'},
+                                {boxLabel: '没受污染的报纸按可回收垃圾处理', name: 'answer', inputValue: '没受污染的报纸按可回收垃圾处理'},
+                                {boxLabel: '受污染的报纸湿水后当湿垃圾处理', name: 'answer', inputValue: '受污染的报纸湿水后当湿垃圾处理'}
+                            ]
+                        }]
+                    }, {
+                        id: 'card-2',
+                        xtype: 'form',
+                        layout: 'fit',
+                        items: [{
+                            id: 'result',
+                            xtype: 'textarea',
+                            readOnly: true
+                        }]
+                    }]
+                }]
+            })
+            const win = new Ext.Window({
+                layout: 'fit',
+                width: 500,
+                height: 300,
+                closeAction: 'hide',
+                title: '垃圾分类问卷调查',
+                plain: true,
+                items: panel
+            })
+            win.show()
+        });
+    </script>
+</head>
+<body>
+<div id="test"></div>
+</body>
+</html>

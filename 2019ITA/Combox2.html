@@ -1,0 +1,66 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>ComboBox3</title>
+	<link rel="stylesheet" type="text/css" href="./resources/css/ext-all.css" />
+ 	<!-- LIBS -->
+ 	<script type="text/javascript" src="./js/ext-base.js"></script>
+ 	<!-- ENDLIBS -->
+    <script type="text/javascript" src="./js/ext-all.js"></script>
+	<script>
+		Ext.onReady(function() {
+			var store = Ext.create('Ext.data.Store', {
+			      fields: ['provice', 'city'],
+			      data : [
+							['湖南',['长沙','湘潭','株洲']],
+							['广东',['广州','珠海','深圳']], 
+					]
+			 });
+
+			var comboBox = new Ext.form.ComboBox({
+				id: 'box1',
+				renderTo: 'test',
+				fieldLabel: 'provice',
+				emptyText: 'Choose your age',
+				mode: 'remote',
+				triggerAction: 'all',
+				store: store,
+				valueField: 'provice',
+				displayField: 'provice',
+				// pageSize: 3
+			}); 
+			var comboBox2 = new Ext.form.ComboBox({
+				id: 'box2',
+				renderTo: 'test2',
+				fieldLabel: 'city',
+				emptyText: 'Choose your age',
+				mode: 'remote',
+				triggerAction: 'all',
+				store: new Ext.data.ArrayStore({
+					id: 0,
+					fields: ['city'],
+					data: store
+				}),
+				valueField: 'city',
+				displayField: 'city',
+				// pageSize: 3
+			}); 
+			comboBox.on('select', function(combo) {
+				var value= Ext.getCmp("box1").getValue();
+				console.log(value);
+				store.clearFilter();
+ 
+				 //filter with a single field
+				store.filter('provice', value);
+                comboBox2.render();
+			});
+
+	    });
+	</script>
+</head>
+<body>
+<div id="test"></div>
+<div id="test2"></div>
+</body>
+</html>

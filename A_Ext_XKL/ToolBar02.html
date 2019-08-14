@@ -1,0 +1,49 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Tree3</title>
+    <link rel="stylesheet" type="text/css" href="./resources/css/ext-all.css" />
+    <!-- LIBS -->
+    <script type="text/javascript" src="./js/ext-base.js"></script>
+    <!-- ENDLIBS -->
+    <script type="text/javascript" src="./js/ext-all.js"></script>
+    <script>
+        Ext.onReady(function() {
+            var tb = new Ext.Toolbar({
+                renderTo: document.body,
+                width: 600,
+                height: 100,
+                items: [
+                    {
+                        text: "文件",
+                        handler: function (btn) { Ext.MessageBox.alert(btn.text); }
+                    }, {
+                        text: "编辑"
+                    }, {
+                        text: "格式"
+                    }, {
+                        text: "查看"
+                    }, {
+                        text: "帮助"
+                    }, "->",
+                    new Ext.form.Field(), {
+                        text: "搜索"
+                    }
+                ]
+            });
+            Ext.get("btnDisable").on("click", function () {
+                tb.disable();
+            });
+            Ext.get("btnEnable").on("click", function () {
+                tb.enable();
+            });
+        });
+    </script>
+</head>
+<body>
+<div id="tb"></div>
+<input id="btnDisable" type="button" value="禁用" />
+<input id="btnEnable" type="button" value="启用" />
+</body>
+</html>

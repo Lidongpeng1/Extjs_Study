@@ -1,0 +1,46 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <title>Tree3</title>
+    <link rel="stylesheet" type="text/css" href="./resources/css/ext-all.css" />
+    <!-- LIBS -->
+    <script type="text/javascript" src="./js/ext-base.js"></script>
+    <!-- ENDLIBS -->
+    <script type="text/javascript" src="./js/ext-all.js"></script>
+    <script>
+        Ext.onReady(function() {
+            var fr = new Ext.tree.TreeNode({text: 'Fruit'});
+            var ap = new Ext.tree.TreeNode({text: 'Apple',checked: true,});
+            var gr = new Ext.tree.TreeNode({text: 'Grapes',checked: true,});
+            var pe = new Ext.tree.TreeNode({text: 'Pear',checked: false,});
+            var st = new Ext.tree.TreeNode({text: 'Strawberry',checked: false,});
+            var wa = new Ext.tree.TreeNode({text: 'Watermelon',checked: false,});
+            var ve = new Ext.tree.TreeNode({text: 'Vegetables',checked: false,});
+
+            var root = new Ext.tree.TreeNode({
+                text:'Goods',
+                expanded: true
+            });
+            root.appendChild(fr);
+            root.appendChild(ve);
+
+            fr.appendChild(ap);
+            fr.appendChild(gr);
+            fr.appendChild(pe);
+            fr.appendChild(st);
+            fr.appendChild(wa);
+
+            var tree = new Ext.tree.TreePanel({
+                renderTo: 'test',
+                width: 200,
+                height: 150,
+                root: root
+            });
+        });
+    </script>
+</head>
+<body>
+<div id="test"></div>
+</body>
+</html>

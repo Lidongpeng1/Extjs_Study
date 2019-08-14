@@ -1,0 +1,145 @@
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <title>08.layout</title>
+        <link rel="stylesheet" type="text/css" href="./resources/css/ext-all.css" />
+        <script type="text/javascript" src="./js/ext-base.js"></script>
+        <script type="text/javascript" src="./js/ext-all.js"></script>
+        <script type="text/javascript" src="localXHR.js"></script>
+        <style type="text/css">
+            * {
+                font-size: 16px;
+            }
+        </style>
+        <script type="text/javascript">
+Ext.onReady(function(){
+
+    var navHandler = function(direction){
+
+        var wizard = Ext.getCmp('wizard').layout;
+        var prev = Ext.getCmp('move-prev');
+        var next = Ext.getCmp('move-next');
+        var activeId = wizard.activeItem.id;
+
+        if (activeId == 'card-0') {
+            if (direction == 1) {
+                wizard.setActiveItem(1);
+                prev.setDisabled(false);
+            }
+        } else if (activeId == 'card-1') {
+            if (direction == -1) {
+                wizard.setActiveItem(0);
+                prev.setDisabled(true);
+            } else {
+                wizard.setActiveItem(2);
+                next.setDisabled(true);
+            }
+        } else if (activeId == 'card-2') {
+            if (direction == -1) {
+                wizard.setActiveItem(1);
+                next.setDisabled(false);
+
+            }
+        }
+    };
+
+    var viewport = new Ext.Viewport({
+        layout:'absolute',
+        pageX:500,
+        pageY:200,
+        items:[{
+            id: 'wizard',
+            width: 700,
+            height:400,
+            title: '垃圾分类问卷调查',
+            layout:'card',
+            activeItem: 0,
+            bodyStyle: 'padding:15px',
+            defaults: {
+                border:false
+            },
+            bbar: [{
+                id: 'move-prev',
+                text: '上一题',
+                handler: navHandler.createDelegate(this, [-1]),
+                disabled: true
+            }, '->',{
+                id: 'move-next',
+                text: '下一题',
+                handler: navHandler.createDelegate(this, [1]),
+            }],
+            items: [{
+                id: 'card-0',
+                xtype:'fieldset',
+                defaultType: 'radio',
+                title: 'Q1:番茄酱属于以下哪种垃圾?(单选)',
+                items: [
+                    {boxLabel: '湿垃圾', name: 'vehicle', inputValue: '湿垃圾'}, 
+                    {boxLabel: '干垃圾', name: 'vehicle', inputValue: '干垃圾'}, 
+                    {boxLabel: '有害垃圾', name: 'vehicle', inputValue: '有害垃圾'},
+                    {boxLabel: '可回收物', name: 'vehicle', inputValue: '可回收物'}
+                ]
+            },{
+                id: 'card-1',
+                xtype:'fieldset',
+                defaultType: 'checkbox',
+                title: 'Q2:王大叔出门遛狗后，哪些是正确处理狗粑粑的方法？(多选)',
+                items: [
+                    {boxLabel: '把粑粑用废纸包好带回家冲掉', name: 'vehicle', inputValue: '把粑粑用废纸包好带回家冲掉'}, 
+                    {boxLabel: '受污染的报纸按照有害垃圾处理', name: 'vehicle', inputValue: '受污染的报纸按照有害垃圾处理'}, 
+                    {boxLabel: '没受到污染的报纸按照可回收垃圾处理', name: 'vehicle', inputValue: '没受到污染的报纸按照可回收垃圾处理'},
+                    {boxLabel: '受污染后的报纸浸水后当做湿垃圾处理', name: 'vehicle', inputValue: '受污染后的报纸浸水后当做湿垃圾处理'},
+                    {
+                        xtype:'button',
+                        text:'提交',
+                        width:60,
+                        height:30,
+                        style:'margin-left:520px;margin-top:150px;',
+                        listeners:{
+                        'click': function(btn, form){
+                            var radois=Ext.getCmp("card-0").find('checked',true);
+                            console.log(radois);
+                            console.log(radois[0].inputValue);
+                        
+                            var checkboxs=Ext.getCmp("card-1").find('checked',true);
+                            var value2='';
+                            for(var i=0;i<checkboxs.length;i++){
+                                if(checkboxs[i].checked==true){
+                                   value2=value2+checkboxs[i].inputValue+"   ";
+                                }
+                            }
+                            console.log(value2);
+                            Ext.getCmp("first").setValue(radois[0].inputValue);
+                            Ext.getCmp("second").setValue(value2);
+                            Ext.MessageBox.alert('提示', '答题完成!');
+                        }}
+                    }
+                ]
+            },{
+                id: 'card-2',
+                labelAlign: 'center',
+                xtype:'form',
+                defaultType: 'textfield',
+                width:600,
+                items: [{
+                    id:'first',
+                    name: 'first',
+                    width:500,
+                    fieldLabel: '第一题答案'
+                },{
+                    id:'second',
+                    name: 'second',
+                    width:500,
+                    fieldLabel: '第二题答案'
+                }]
+            }]
+        }]
+    });
+
+});
+        </script>
+    </head>
+    <body>
+        <script type="text/javascript" src="../shared/examples.js"></script>
+    </body>
+</html>
