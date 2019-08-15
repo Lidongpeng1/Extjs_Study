@@ -1,0 +1,88 @@
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html" ; charset="utf-8" />
+    <title>Combobox</title>
+    <script type="text/javascript" src="../../adapter/ext/ext-base.js"></script>
+    <script type="text/javascript" src="../../ext-all.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+    <script>
+        Ext.onReady(function () {
+
+            var province_store = new Ext.data.ArrayStore({
+                fields: ['value', 'text'],
+                data: [
+                    ['广东', '广东'], ['广西', '广西'], ['黑龙江', '黑龙江'], ['吉林', '吉林'], ['陕西', '陕西'],
+                    ['浙江', '浙江'], ['江苏', '江苏'], ['四川', '四川'], ['湖北', '湖北'], ['新疆', '新疆'],
+                    ['云南', '云南'], ['安微', '安微'], ['福建', '福建'], ['江苏', '江苏'], ['山东', '山东'],
+                    ['北京', '北京'], ['台湾', '台湾'], ['香港', '香港'], ['澳门', '澳门']]
+            });
+
+            var guangdong_store = new Ext.data.ArrayStore({
+                fields: ['value', 'text'],
+                data: [['广州市', '广州市'], ['深圳市', '深圳市'], ['珠海市', '珠海市'], ['汕头市', '汕头市']]
+            });
+
+            var guangxi_store = new Ext.data.ArrayStore({
+                fields: ['value', 'text'],
+                data: [['南宁市', '南宁市'], ['柳州市', '柳州市'], ['桂林市', '桂林市'], ['梧州市', '梧州市']]
+            });
+
+            var form = new Ext.FormPanel({
+                renderTo: 'form_panel',
+                defaultType: 'textfield',
+                labelAlign: 'center',
+                title: 'Combobox form',
+                labelWidth: 50,
+                frame: true,
+                width: 300,
+                items: [new Ext.form.ComboBox({
+                    fieldLabel: '省',
+                    width: 200,
+                    id: 'province',
+                    triggerAction: 'all',
+                    editable: false,
+                    displayField: 'text',
+                    valueField: 'value',
+                    mode: 'local',
+                    store: province_store,
+                    listeners: {
+                        "select": function (combo, record, index) {
+                            var store;
+                            if (record.get('value') == '广东') {
+                                store = guangdong_store;
+                            }
+                            if (record.get('value') == '广西') {
+                                store = guangxi_store;
+                            }
+                            Ext.getCmp('city').clearValue();
+                            Ext.getCmp('city').store = store;
+                            if (Ext.getCmp('city').view) {
+                                Ext.getCmp('city').view.setStore(store);
+                            }
+                        }
+                    }
+                }),
+                new Ext.form.ComboBox({
+                    id: 'city',
+                    width: 200,
+                    triggerAction: 'all',
+                    editable: false,
+                    displayField: 'text',
+                    valueField: 'value',
+                    mode: 'local',
+                    store: '',
+                    fieldLabel: '市'
+                })
+                ]
+            });
+
+        });
+    </script>
+</head>
+
+<body>
+    <div id="form_panel"></div>
+</body>
+
+</html>

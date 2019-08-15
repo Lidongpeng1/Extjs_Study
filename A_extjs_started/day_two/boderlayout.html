@@ -1,0 +1,38 @@
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html" ; charset="utf-8" />
+    <title>test_boderlayout</title>
+    <script type="text/javascript" src="../../adapter/ext/ext-base.js"></script>
+    <script type="text/javascript" src="../../ext-all.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+
+    <script type="text/javascript">
+Ext.onReady(function(){
+    var viewport = new Ext.Viewport({
+        layout: 'border',   
+        title:'Boder Layout',
+        defaults : {
+             frame : true,
+             split : true
+        }, 
+        items: [
+            {region:'north',html:'我不是一个东西',title:'north',height:80,collapsible:true,minSize:80,maxSize:200},
+            {region:'south',html:'我也不是一个东西',title:'south',height:80,collapsible:true,minSize:80,maxSize:200},
+            {region:'west',html:'他们四个有三个不是东西',title:'west',width:100,collapsible:true,minSize:80,maxSize:200},
+            {region:'east',html:'我属于东西',title:'east',width:100,collapsible:true,minSize:80,maxSize:200},
+            {region:'center',html:'他们都不是个东西，我也不好意思是个东西',title:'center'} 
+        ]
+    });
+});
+        </script>
+
+        </style>
+    </script>
+</head>
+
+<body>
+
+</body>
+
+</html>

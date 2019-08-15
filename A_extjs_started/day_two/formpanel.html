@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>这是中文</title>
+    <mata charset="UTF-8">
+        <script type="text/javascript" src="../../adapter/ext/ext-base.js"></script>
+        <script type="text/javascript" src="../../ext-all.js"></script>
+        <link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+        <!--ExtJs框架结束-->
+        <script type="text/javascript">
+            Ext.onReady(function () {
+                //初始化标签中的Ext:Qtip属性
+                Ext.QuickTips.init();
+                Ext.form.Field.prototype.msgTarget = 'side';
+
+                //提交按钮处理方法
+                var buttomSubmitClick = function () {
+                    if (form.getForm().isValid()) {
+                        form.getForm().reset();
+                        Ext.Msg.alert('提示', '您点击了提交按钮！');
+                    }
+                };
+                //重置按钮点击处理方法
+                var buttomResetClick = function () {
+                    form.getForm().reset();
+                    //  Ext.MessageBox.alert('提示','您点击了重置按钮！');
+                    // Ext.get()
+                }
+
+                //重置按钮鼠标悬停处理方法
+                var buttomResetMouseover = function () {
+                    Ext.MessageBox.alert('提示', '您的鼠标按钮停在了重置按钮上面')
+                }
+
+                //提交按钮
+                var buttonSumbit = new Ext.Button({
+                    text: '提交',
+                    handler: buttomSubmitClick,
+                })
+
+                //重置按钮
+                var buttomReset = new Ext.Button({
+                    text: '重置',
+                    listeners: {
+                        'click': buttomResetClick,
+                        //  'mouseover':buttomResetMouseover,
+                    }
+                })
+
+                //用户名input
+                var txtusername = new Ext.form.TextField({
+                    //  id:'txtusername',
+                    width: 180,
+                    allowBlank: false,
+                    maxLength: 20,
+                    name: 'username',
+                    emptyText: '请输入用户名',
+                    fieldLabel: '<font color=red>*</font>' + '用户名称',
+                    blankText: '请输入用户名',
+                    maxLengthText: '用户名不能超过20个字符'
+                });
+                //密码input
+                var txtpassword = new Ext.form.TextField({
+                    //  id:'txtpassword',
+                    width: 180,
+                    allowBlank: false,
+                    maxLength: 20,
+                    inputType: 'password',
+                    name: 'password',
+                    fieldLabel: '<font color=red>*</font>' + '密码',
+                    blankText: '请输入密码',
+                    maxLengthText: '密码不能超过20个字符'
+                });
+
+                //单选框
+                var checkbox = new Ext.form.Checkbox({
+                    boxLabel: 'Apple',
+                    checked: true
+                });
+                var checkbox1 = new Ext.form.Checkbox({
+                    boxLabel: 'huawei',
+                });
+
+                var radio = new Ext.form.Radio({
+                    boxLabel: 'Car',
+                    name: 'vehicle',
+                    inputValue: 'car',
+                    checked: true
+                });
+                var radio1 = new Ext.form.Radio({
+                    boxLabel: 'bigCar',
+                    name: 'vehicle',
+                    inputValue: 'bigcar',
+                });
+
+
+                //文本域
+                var textArea = new Ext.form.TextArea({
+                    width: 180,
+                    grow: true,
+                    preventScrollbars: true,
+                    fieldLabel: '<font color=red>*</font>' + '描述',
+                    allowBlank: false,
+                    emptyText: '请输入你的描述',
+                    maxLength: 20,
+                    minLength: 5,
+                    maxLengthText: '不能超过20个字符'
+                });
+                //选生日
+                var dateField = new Ext.form.DateField({
+                    width: 180,
+                    fieldLabel: '生日',
+                    emptyText: '请选择你的生日',
+                    format: 'Y- m - d',
+                    disabledDays: [0, 6],
+                });
+                //选省份province
+                var combox = new Ext.form.ComboBox({
+                    width: 180,
+                    fieldLabel: '省份',
+                    emptyText: '请选择或者输入你的省份',
+                    mode: 'local',
+                    // editable: false,
+                    store: new Ext.data.ArrayStore({
+                        id: 0,
+                        fields: ['province', 'description'],
+                        data: [['广东省珠海市', '广东省珠海市'], ['湖南省长沙市', '湖南省长沙市'], ['香港九龙', '香港九龙'], ['广东省广州市', '广东省广州市']]
+                    }),
+                    valueField: 'province',
+                    displayField: 'description'
+                });
+                combox.on('select', function (combo) {
+                    Ext.MessageBox.alert('你的选择为' + combo.getValue() + '-' + combo.getRawValue());
+                });
+
+                //表单
+                var form = new Ext.form.FormPanel({
+                    id: 'form',
+                    frame: true,
+                    title: '表单标题',
+                    style: 'margin:10px',
+                    html: '<div style="padding:10px">这里表单内容</div>',
+                    items: [txtusername, txtpassword, textArea, dateField, combox, checkbox,checkbox1,radio,radio1],
+                    buttons: [buttonSumbit, buttomReset]
+                });
+                //窗体
+                var win = new Ext.Window({
+                    title: '窗口',
+                    width: 476,
+                    height: 374,
+                    html: '<div>这里是窗体内容</div>',
+                    resizable: true,
+                    modal: true,
+                    maximizable: true,
+                    minimizable: true,
+                    items: form
+                });
+                win.show();
+
+            }
+            );
+        </script>
+</head>
+
+<body>
+    <!--
+ 说明：
+ (1)var form = new Ext.form.FormPanel({}):创建一个新的form表单对象。
+ (2)title: '表单标题'：表单的标题，如果不加的话，不会出现上面的浅色表单标题栏。
+ (3)style: 'margin:10px':表单的样式，加了个外10px的外边距。
+ (4)html: '<div style="padding:10px">这里表单内容</div>'：表单内显示html的内容。
+ -->
+</body>
+
+</html>
