@@ -1,0 +1,114 @@
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html" ; charset="utf-8" />
+    <title>test_radio</title>
+    <script type="text/javascript" src="../../adapter/ext/ext-base.js"></script>
+    <script type="text/javascript" src="../../ext-all.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+    <script type="text/javascript">
+
+        Ext.onReady(function () {
+            var panel = new Ext.Panel({
+                renderTo:'test1',
+                layout:'fit',
+                height:500,
+                width:600,
+                items:[{
+                    xtype:'panel',
+                    title:'vbox layout',
+                    layout:'vbox',
+                    layoutConfig:{
+                        align:'left',
+                        pack:'start'
+                    },
+                    defaults:{
+                        bodyStyle:'padding:20px'
+                    },
+                    items:[
+                        {
+                        xtype:'panel',
+                        title:'panel1',
+                        html:'panel1',
+                        felx:1
+                    },
+                    {
+                        xtype:'panel',
+                        title:'panel2',
+                        html:'panel2',
+                        felx:1
+                    },
+                    {
+                        xtype:'panel',
+                        title:'panel3',
+                        html:'panel3',
+                        felx:1
+                    },
+                    {
+                        xtype:'panel',
+                        title:'panel4',
+                        html:'panel4',
+                        felx:1
+                    },
+                ]
+                },
+                
+            ]
+            })
+
+            var panel = new Ext.Panel({
+                renderTo:'test2',
+                layout:'fit',
+                height:500,
+                width:600,
+                items:[{
+                    xtype:'panel',
+                    title:'hbox layout',
+                    layout:'hbox',
+                    layoutConfig:{
+                        align:'left',
+                        pack:'start'
+                    },
+                    defaults:{
+                        bodyStyle:'padding:20px'
+                    },
+                    items:[
+                        {
+                        xtype:'panel',
+                        title:'panel1',
+                        html:'panel1',
+                        felx:1
+                    },
+                    {
+                        xtype:'panel',
+                        title:'panel2',
+                        html:'panel2',
+                        felx:1
+                    },
+                    {
+                        xtype:'panel',
+                        title:'panel3',
+                        html:'panel3',
+                        felx:2
+                    },
+                    {
+                        xtype:'panel',
+                        title:'panel4',
+                        html:'panel4',
+                        felx:1
+                    },
+                ]
+                }]
+            })
+        });
+
+    </script>
+</head>
+
+<body>
+    <div id='test1'></div>
+
+    <div id='test2'></div>
+</body>
+
+</html>

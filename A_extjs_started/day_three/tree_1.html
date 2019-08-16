@@ -1,0 +1,54 @@
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html" ; charset="utf-8" />
+    <title>TreePanel</title>
+    <script type="text/javascript" src="../../adapter/ext/ext-base.js"></script>
+    <script type="text/javascript" src="../../ext-all.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+    <script type="text/javascript">
+
+        Ext.onReady(function () {
+            var fr = new Ext.tree.TreeNode({ text: 'Fruit' });
+            var ap = new Ext.tree.TreeNode({ text: 'Apple', checked: true, });
+            var gr = new Ext.tree.TreeNode({ text: 'Grapes', checked: true, });
+            var pe = new Ext.tree.TreeNode({ text: 'Pear', checked: false, });
+            var st = new Ext.tree.TreeNode({ text: 'Strawberry', checked: false, });
+            var wa = new Ext.tree.TreeNode({ text: 'Watermelon', checked: false, });
+            var ve = new Ext.tree.TreeNode({ text: 'Vegetables', checked: false, });
+
+            var root = new Ext.tree.TreeNode({
+                text: 'Goods',
+                expanded: true
+            });
+            root.appendChild(fr);
+            root.appendChild(ve);
+
+            fr.appendChild(ap);
+            fr.appendChild(gr);
+            fr.appendChild(pe);
+            fr.appendChild(st);
+            fr.appendChild(wa);
+
+            var tree = new Ext.tree.TreePanel({
+                renderTo: 'test',
+                useArrows: true,
+                autoScroll: false,
+                animate: true,
+                enableDD: true,
+                // containerScroll: true,
+                border: false,
+                // width: 200,
+                // height: 150,
+                root: root
+            });
+        });
+
+    </script>
+</head>
+
+<body>
+    <div id='test'></div>
+</body>
+
+</html>

@@ -1,0 +1,145 @@
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html" ; charset="utf-8" />
+    <title>test_radio</title>
+    <script type="text/javascript" src="../../adapter/ext/ext-base.js"></script>
+    <script type="text/javascript" src="../../ext-all.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+    <script type="text/javascript">
+
+        Ext.onReady(function () {
+
+            //     var viewport = new Ext.Viewport({
+            //         layout: 'anchor',
+            //         // height : 300,
+            //         // width : 300,
+            //         items: [
+            //             {
+            //                 title: 'Panel1',
+            //                 anchor: '-50, -150',
+            //                 frame: true
+            //             },
+            //             {
+            //                 title: 'Panel2',
+            //                 anchor: '-10, -150',
+            //                 frame: true
+            //             }]
+            //     });
+            // });
+
+            //     var viewport = new Ext.Viewport({
+            //         layout: 'anchor',
+            //         anchorSize: { width: 800, height: 600 },
+            //         items: [{
+            //             title: 'Item 1',
+            //             html: 'Content 1',
+            //             width: 800,
+            //             anchor: 'right 20%'
+            //         }, {
+            //             title: 'Item 2',
+            //             html: 'Content 2',
+            //             width: 300,
+            //             anchor: '50% 30%'
+            //         }, {
+            //             title: 'Item 3',
+            //             html: 'Content 3',
+            //             width: 600,
+            //             anchor: '-100 50%'
+            //         }]
+            //     });
+            // });
+
+            var table = new Ext.Panel({
+                renderTo: 'test1',
+                title: 'Table Layout',
+                layout: 'table',
+                defaults: {
+                    // applied to each contained panel
+                    bodyStyle: 'padding:20px'
+                },
+                layoutConfig: {
+                    // The total column count must be specified here
+                    columns: 3,
+                },
+                items: [
+                    {
+                    title: 'column layout - mixed',
+                    layout: 'column',
+                    colspan: 3,
+                    width:'100%',
+                    items: [{
+                        title: 'Column 1',
+                        width: 200,
+                        columnWidth: .3
+                    }, {
+                        title: 'Column 2',
+                        columnWidth: .5
+                    }, {
+                        title: 'Column 3',
+                        columnWidth: .2
+                    }]
+                }, 
+                {
+                    title:'Cell A content',
+                    html: '<p>Cell A content</p>',
+                    rowspan: 2
+                }, {
+                    html: '<p>Cell B content</p>',
+                    colspan: 2
+                }, {
+                    html: '<p>Cell C content</p>',
+                    cellCls: 'highlight'
+                }, {
+                    html: '<p>Cell D content</p>'
+                }]
+            });
+
+            var p = new Ext.Panel({
+                renderTo: 'test2', 
+                title: 'Column Layout - Mixed',
+                layout: 'column',
+                items: [{
+                    title: 'Column 1',
+                    html:'<p>Column 1 content</p>',
+                    width: 500
+                }, {
+                    title: 'Column 2',
+                    columnWidth: .8
+                }, {
+                    title: 'Column 3',
+                    columnWidth: .2
+                }]
+            });
+
+
+
+
+            // Ext.onReady(function () {
+
+            //     var viewport = new Ext.Viewport({
+            //         layout: 'anchor',
+            //         items: [{
+            //             title: 'panel 1',
+            //             html: 'panel 1',
+            //             anchor: '50% 50%',
+            //         }, {
+            //             title: 'panel 2',
+            //             html: 'panel 2',
+            //             anchor: '80%'
+            //         }]
+            //     });
+
+            // });
+        });
+
+    </script>
+</head>
+
+<body>
+    <div id='test1'></div>
+
+    <div id='test2'></div>
+</body>
+
+</html>

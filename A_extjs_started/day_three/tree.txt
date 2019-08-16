@@ -1,0 +1,7 @@
+[
+    {text:'GuangZhou',leaf: true,checked: false},
+    {text:'ShenZhen', leaf: true,checked: false},
+    {text:'ZhuHai', children: [
+      {text:'XiangZhou', leaf: true,checked: false}
+    ]}
+]

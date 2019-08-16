@@ -1,0 +1,99 @@
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html" ; charset="utf-8" />
+    <title>TreePanel</title>
+    <script type="text/javascript" src="../../adapter/ext/ext-base.js"></script>
+    <script type="text/javascript" src="../../ext-all.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+    <style type="text/css">
+        .complete {
+            text-decoration: line-through
+        }
+    </style>
+    <script type="text/javascript">
+        Ext.onReady(function () {
+            var root = new Ext.tree.AsyncTreeNode({ text: 'GuangDong' });
+
+            var menu = new Ext.menu.Menu({
+                items: [{
+                    id: 'showinfo',
+                    text: 'showinfo...'
+                }, {
+                    id: 'deleteNode',
+                    text: 'Delete Node'
+                }, {
+                    id: 'Node',
+                    text: 'Node'
+                }],
+                listeners: {
+                    itemclick: function (item) {
+                        switch (item.id) {
+                            case 'deleteNode':
+                                var currentNode = item.parentMenu.contextNode;
+                                if (currentNode.parentNode) {
+                                    currentNode.remove();
+                                }
+                                break;
+                            case 'showinfo':
+                                var currentNode = item.parentMenu.contextNode;
+                                Ext.Msg.alert('当前节点信息', currentNode.text)
+                                break;
+                        }
+                    }
+                }
+            });
+
+            var tree = new Ext.tree.TreePanel({
+                renderTo: 'test',
+                width: 200,
+                height: 300,
+                dataUrl: 'tree.txt',
+                useArrows: true,
+                enableDD:true,
+                selModel: new Ext.tree.MultiSelectionModel({}),
+                contextMenu: menu,
+                // loader: new Ext.tree.TreeLoader({dataUrl: 'tree.txt' , baseAttrs:{checked: false}}),
+                root: root,
+                listeners: {
+                    checkchange: function (node, checked) {
+                        if (checked) {
+                            node.getUI().addClass('complete');
+                        } else {
+                            node.getUI().removeClass('complete');
+                        }
+                    },
+                    // click: function (node) {
+                    //     Ext.Msg.alert('Tree Event', 'you clicked node:' + node.text);
+                    // },
+                    contextmenu: function (node, e) {
+                        node.select();
+                        var treeContextMenu = node.getOwnerTree().contextMenu;
+                        treeContextMenu.contextNode = node;
+                        treeContextMenu.showAt(e.getXY());
+                    }
+                },
+            });
+
+            var treeEditor = new Ext.tree.TreeEditor(tree,
+                { allowBlank: false }, {
+                    listeners: {
+                        complete: function (editor, currVal, origVal) {
+                            if (currVal.indexOf('Zh') >= 0) {
+                                editor.boundEl.dom.style = "color:red";
+                            }
+                            Ext.Msg.alert('Tree Editor', 'node text changed from ' + origVal + ' to ' + currVal);
+                        }
+                    }
+                });
+                
+            root.expand();
+        });
+    </script>
+</head>
+
+<body>
+    <div id='test'></div>
+</body>
+
+</html>

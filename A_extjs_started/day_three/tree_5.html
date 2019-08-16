@@ -1,0 +1,93 @@
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html" ; charset="utf-8" />
+    <title>TreePanel</title>
+    <script type="text/javascript" src="../../adapter/ext/ext-base.js"></script>
+    <script type="text/javascript" src="../../ext-all.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+
+    <script type="text/javascript">
+        Ext.onReady(function() {
+            var gz = new Ext.tree.TreeNode({text: 'GuangZhou'});
+            var sz = new Ext.tree.TreeNode({text: 'ShenZhen'});
+            var zh = new Ext.tree.TreeNode({text: 'ZhuHai'});
+            var xz = new Ext.tree.TreeNode({text: 'XiangZhou'});
+
+            var root = new Ext.tree.TreeNode({
+                text:'GuangDong',
+                checked: true,
+                expanded: true
+            });
+            root.appendChild(gz);
+            root.appendChild(sz);
+            root.appendChild(zh);
+
+            zh.appendChild(xz);
+
+            var tree = new Ext.tree.TreePanel({
+                renderTo: 'test',
+                enableDD: true,
+                width: 200,
+                height: 150,
+                root: root
+            });
+
+            ////////////////////////
+
+            var gz = new Ext.tree.TreeNode({text: 'zhongshan'});
+            var sz = new Ext.tree.TreeNode({text: 'zhanjiang'});
+            var zh = new Ext.tree.TreeNode({text: 'chaoshan'});
+
+            var root2 = new Ext.tree.TreeNode({
+                text:'GuangDong',
+                checked: true,
+                expanded: true
+            });
+            root2.appendChild(gz);
+            root2.appendChild(sz);
+            root2.appendChild(zh);
+
+            var tree2 = new Ext.tree.TreePanel({
+                renderTo: 'test2',
+                enableDD: true,
+                width: 200,
+                height: 150,
+                root: root2
+            });
+
+            tree.on('nodedrop', function(e) {
+                Ext.Msg.alert('Drag Event', 'currently dragging node:' + e.dropNode.text + ' dropping into node:' + e.target.text + ', dragging pattern is ' + e.point);
+            });
+
+            tree2.on('nodedrop', function(e) {
+                Ext.Msg.alert('Drag Event', 'currently dragging node:' + e.dropNode.text + ' dropping into node:' + e.target.text + ', dragging pattern is ' + e.point);
+            });
+
+            var treeFilter = new Ext.tree.treeFilter(tree,{
+                clearBlank:true,
+                autoClear:true,
+            });
+
+            Ext.get('filter').on('click',function(){
+                treeFilter.filter('123456');
+            })
+
+            Ext.get('reset').on('click',function(){
+                treeFilter.clear();
+            })
+
+        });
+    </script>
+</head>
+
+<body>
+    <div id='test'></div>
+    <div id='test2'></div>
+    <div>
+    <button id = 'filter'>filter</button>
+    <button id = 'reset'>reset</button>
+    </div>
+</body>
+
+</html>

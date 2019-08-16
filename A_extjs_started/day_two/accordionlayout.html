@@ -16,12 +16,12 @@ var viewport = new Ext.Viewport({
         region: 'west',
         width: 200,
         height:200,
-        split: true, 
+        border: true,
         layout: 'accordion',
         layoutConfig: {
-            titleCollapse: true,//??
+            titleCollapse: true,
             animate: true,
-            activeOnTop: false//??
+            activeOnTop: false
         },
         items: [{
             title: 'First Section',
@@ -35,7 +35,7 @@ var viewport = new Ext.Viewport({
         }]
     },{
         region: 'center',
-        split: true,//?
+        split: true,
         border: true//?
     }]
 });
