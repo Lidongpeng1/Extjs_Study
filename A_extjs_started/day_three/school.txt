@@ -1,0 +1,12 @@
+[
+    {text:'一班',"id": 1,children:[
+        {text:'ethan1',"id": 2, leaf: true,checked: false},
+        {text:'ethan2',"id": 3, leaf: true,checked: false},
+        {text:'ethan3',"id": 4, leaf: true,checked: false}
+    ]},
+    {text:'二班',"id": 5,children:[
+        {text:'lidongpneg1', "id": 6,leaf: true,checked: false},
+        {text:'lidongpneg2', "id": 7,leaf: true,checked: false},
+        {text:'lidongpneg3', "id": 8,leaf: true,checked: false}
+    ]}
+]

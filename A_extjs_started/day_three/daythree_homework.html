@@ -1,0 +1,224 @@
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html" ; charset="utf-8" />
+    <title>homework</title>
+    <script type="text/javascript" src="../../adapter/ext/ext-base.js"></script>
+    <script type="text/javascript" src="../../ext-all.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+    <style type="text/css">
+        #test {
+            background-color: rgb(256, 240, 26);
+        }
+    </style>
+    <script type="text/javascript">
+        Ext.onReady(function () {
+
+            var menu = new Ext.menu.Menu({
+                items: [{
+                    id: 'deleteNode',
+                    text: 'Delete Node'
+                }, {
+                    id: 'infoNode',
+                    text: 'Info Node'
+                }, {
+                    id: 'addNode',
+                    text: 'Add Node'
+                }],
+                listeners: {
+                    itemclick: function (item) {
+                        switch (item.id) {
+                            case 'deleteNode':
+                                var currentNode = item.parentMenu.contextNode;
+                                if (currentNode.parentNode) {
+                                    currentNode.remove();
+                                }
+                                break;
+                            case 'infoNode':
+                                var currentNode = item.parentMenu.contextNode;
+                                Ext.Msg.alert('提示', "当前节点为：" + currentNode.text);
+                                break;
+                            case 'addNode':
+                                var currentNode = item.parentMenu.contextNode;
+                                Ext.Msg.prompt("添加节点", "请输入名字", function (btn, text) {
+                                    if (btn == 'ok') {
+                                        if (text === '') {
+                                            Ext.Msg.alert("错误", "节点不能为空");
+                                        } else {
+                                            if (currentNode.isLeaf()) {
+                                                currentNode.parentNode.appendChild({ text: text, leaf: true, checked: false })
+                                            } else {
+                                                if (currentNode.parentNode) {
+                                                    currentNode.appendChild({ text: text, leaf: true, checked: false })
+                                                } else {
+                                                    currentNode.appendChild({ text: text, children: [] })
+                                                }
+                                            }
+                                        }
+                                    }
+                                    else { }
+                                }, this, true);
+                                break;
+                        }
+                    }
+                }
+            });
+
+            // var root = new Ext.tree.AsyncTreeNode({ text: '学校' });
+
+
+            var classOne = new Ext.tree.TreeNode({ text: 'Bering' ,"id": 1});
+            var classTwo = new Ext.tree.TreeNode({ text: 'Gibraltar' ,"id": 2});
+            var classThree = new Ext.tree.TreeNode({ text: 'Suez' ,"id": 3});
+            var classFour = new Ext.tree.TreeNode({ text: 'Panama' ,"id": 4});
+            var studentOne = new Ext.tree.TreeNode({ text: 'ethan1',"id": 5, leaf: true, checked: false, });
+            var studentTwo = new Ext.tree.TreeNode({ text: 'ethan2',"id": 6, leaf: true, checked: false, });
+            var studentThree = new Ext.tree.TreeNode({ text: 'ethan3',"id": 7, leaf: true, checked: false, });
+            var studentFour = new Ext.tree.TreeNode({ text: 'ethan4',"id": 8, leaf: true, checked: false, });
+
+            var root = new Ext.tree.TreeNode({
+                text: '学校',
+                expanded: true
+            });
+            root.appendChild(classOne);
+            root.appendChild(classTwo);
+            root.appendChild(classThree);
+            root.appendChild(classFour);
+
+            classOne.appendChild(studentOne);
+            classTwo.appendChild(studentTwo);
+            classThree.appendChild(studentThree);
+            classFour.appendChild(studentFour);
+
+            // var root = new Ext.tree.AsyncTreeNode({ text: '学校' });
+            
+            var tree = new Ext.tree.TreePanel({
+                enableDD: true,
+                width: 200,
+                height: 600,
+                root: root,
+                // dataUrl: 'school.txt',
+                contextMenu: menu,
+                listeners: {
+                    contextmenu: function (node, e) {
+                        node.select();
+                        var treeContextMenu = node.getOwnerTree().contextMenu;
+                        treeContextMenu.contextNode = node;
+                        treeContextMenu.showAt(e.getXY());
+                    },
+                    click: function (node) {
+                        clickId = node.id
+                    }
+                }
+            });
+            tree.expand();
+            // tree.expandAll()
+            var treeEditor = new Ext.tree.TreeEditor(tree, { allowBlank: false }, {
+            });
+
+            let MaxId = 8
+            let clickId = 0
+            let add = function (text) {
+                let node = tree.getNodeById(clickId)
+                if (node && text) {
+                    if (node.text === '学校') {
+                        node.appendChild(new Ext.tree.TreeNode({
+                            id: MaxId++,
+                            text: text,
+                            leaf: false,
+                            checked: false
+                        }))
+                    }
+                    else if (!node.isLeaf()) {
+                        node.appendChild(new Ext.tree.TreeNode({
+                            id: MaxId++,
+                            text: text,
+                            leaf: true,
+                            checked: false
+                        }))
+                    } else {
+                        node.parentNode.appendChild(new Ext.tree.TreeNode({
+                            id: MaxId++,
+                            text: text,
+                            leaf: true,
+                            checked: false
+                        }))
+                    }
+                    Ext.Msg.alert('Message', '添加成功!');
+                    Ext.getCmp('addItem').reset();
+                } else if (!node) {
+                    Ext.Msg.alert('Error', '请先选择一个节点');
+                    Ext.getCmp('addItem').reset();
+                } else if (!text) {
+                    Ext.Msg.alert('Error', '请输入节点名字');
+                    Ext.getCmp('addItem').reset();
+                }
+            }
+
+            new Ext.Viewport({
+                layout: 'border',
+                items: [{
+                    region: 'west',
+                    title: '目录',
+                    xtype: 'panel',
+                    autoScroll: true,
+                    rootVisible: false,
+                    width: 200,
+                    items: [
+                        tree
+                    ]
+                }, {
+                    region: 'center',
+                    xtype: 'panel',
+                    layout: 'hbox',
+                    layoutConfig: {
+                        align: 'middle',
+                        pack: 'center',
+                    },
+                    items: [{
+                        xtype: 'form',
+                        id: 'classForm',
+                        buttonAlign: 'center',
+                        width: 600,
+                        title: '添加节点',
+                        frame: true,
+                        layout: 'column',
+                        items: [
+                            {
+                                xtype: 'textfield',
+                                columnWidth: .99,
+                                id: 'addItem',
+                                emptyText: '请输入节点名字'
+                            }
+                        ],
+                        buttons: [{
+                            text: '添加',
+                            listeners: {
+                                'click': function () {
+                                    let text = Ext.getCmp('addItem').getValue()
+                                    add(text)
+                                }
+                            }
+                        }]
+                    }],
+                }, {
+                    region: 'north',
+                    xtype: 'panel',
+                    height: 120,
+                    // autoEl: {
+                    //     tag: 'img',
+                    //     src: './images/background2.jpg'
+                    // }
+                    title: '学生管理系统',
+                    autoHeight: true
+                }]
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <div id="test"></div>
+</body>
+
+</html>
