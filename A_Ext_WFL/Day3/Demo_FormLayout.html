@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Demo FormLayout</title>
+    <script src="../../adapter/ext/ext-base.js" type="text/javascript"></script>
+    <script src="../../ext-all.js" type="text/javascript"></script>
+    <link href="../../resources/css/ext-all.css" rel="stylesheet" type="text/css">
+    <script>
+        Ext.onReady(function () {
+            var viewport = new Ext.Viewport({
+                layout: 'fit',
+                items: [
+                    {
+                        layout: 'form',
+                        defaultType: 'textfield',
+                        labelAlign: 'right',
+                        labelWidth: 50,
+                        frame: true,
+                        items:[
+                            {
+                                fieldLabel: 'name',
+                                name: 'name',
+                                anchor: '90% 50%'
+                            }
+                        ]
+
+                    }
+                ]
+            })
+        })
+
+    </script>
+    <script src="../../ext-all.js" type="text/javascript"></script>
+    <link href="../../resources/css/ext-all.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+
+</body>
+</html>

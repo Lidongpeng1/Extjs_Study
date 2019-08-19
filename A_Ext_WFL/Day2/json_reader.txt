@@ -1,0 +1,6 @@
+[{
+    name: 'Alice',
+    age: 12,
+    birthday: '2008-01-01T00:00:00',
+    combo: 2
+}]

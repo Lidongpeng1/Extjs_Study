@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>HomeWork</title>
+    <script src="../../adapter/ext/ext-base.js" type="text/javascript"></script>
+    <script src="../../ext-all.js" type="text/javascript"></script>
+    <link href="../../resources/css/ext-all.css" rel="stylesheet" type="text/css">
+
+    <script>
+
+        Ext.onReady(function () {
+
+            var root = new Ext.tree.TreeNode({text: 'IT Academy', icon: 'icon_academy.png'});
+            var panama = new Ext.tree.TreeNode({text: `Panama`, icon: 'icon_class.png'});
+            var suez = new Ext.tree.TreeNode({text: 'Suez', icon: 'icon_class.png'});
+            var gibraltar = new Ext.tree.TreeNode({text: 'Gibraltar', icon: 'icon_class.png'});
+            var gukson = new Ext.tree.TreeNode({text: 'Gukson', icon: 'icon_student.png'});
+            var vincent = new Ext.tree.TreeNode({text: 'Vincent', icon: 'icon_student.png'});
+
+            var gbson = new Ext.tree.TreeNode({text: 'Gibraltar Son', icon: 'icon_student.png'});
+            var gbcent = new Ext.tree.TreeNode({text: 'Gibraltar Cent', icon: 'icon_student.png'});
+            var sucent = new Ext.tree.TreeNode({text: 'Suez Cent', icon: 'icon_student.png'});
+            var suson = new Ext.tree.TreeNode({text: 'Suez Son', icon: 'icon_student.png'});
+            root.appendChild(panama);
+            root.appendChild(suez);
+            root.appendChild(gibraltar);
+            panama.appendChild(gukson);
+            panama.appendChild(vincent);
+            gibraltar.appendChild(gbson);
+            gibraltar.appendChild(gbcent);
+            suez.appendChild(suson);
+            suez.appendChild(sucent);
+
+            var selectedNode;
+
+            var addNode = function (currentNode) {
+                var inputValue = Ext.get('input').valueOf().getValue();
+                var textStr = inputValue.length > 0 ? inputValue : 'default';
+                if (currentNode.getDepth() === 2) {
+                    currentNode.parentNode.appendChild(new Ext.tree.TreeNode({text: textStr, icon: 'icon_student.png'}));
+                } else if (currentNode.getDepth() === 1) {
+                    currentNode.appendChild(new Ext.tree.TreeNode({text: textStr, icon: 'icon_student.png'}));
+                }
+                else {
+                    currentNode.appendChild(new Ext.tree.TreeNode({text: textStr, icon: 'icon_class.png'}));
+                }
+            };
+
+            var menu = new Ext.menu.Menu({
+                items: [{
+                    id: 'addNode',
+                    text: 'Add Node'
+                },{
+                    id: 'deleteNode',
+                    text: 'Delete Node'
+                }],
+                listeners: {
+                    itemclick: function (item) {
+                        switch (item.id) {
+                            case 'addNode':
+                                var currentNode = item.parentMenu.contextNode;
+                                addNode(currentNode);
+                                break;
+                            case 'deleteNode':
+                                var currentNode = item.parentMenu.contextNode;
+                                if (currentNode.parentNode) {
+                                    currentNode.remove();
+                                }
+                                break;
+                        }
+                    }
+                }
+            });
+
+            var tree = new Ext.tree.TreePanel({
+                renderTo: 'panel',
+                root: root,
+                width: 200,
+                height: 400,
+                enableDD: true,
+                contextMenu: menu,
+                listeners: {
+                    contextMenu: function (node, e) {
+                        node.select();
+                        var treeContentMenu = node.getOwnerTree().contextMenu;
+                        treeContentMenu.contextNode = node;
+                        treeContentMenu.showAt(e.getXY());
+                    },
+                    click: function (node) {
+                        selectedNode = node;
+                    }
+                }
+            });
+            tree.expandAll();
+
+            Ext.get('add').on('click', function () {
+                selectedNode ? addNode(selectedNode) : Ext.MessageBox.alert('Error', 'Nothing has been selected');
+            });
+
+            var treeEditor = new Ext.tree.TreeEditor(tree,{allowBlank: false}, {
+                listeners: {
+                    complete: function (editor, currVal, origVal) {
+                        Ext.MessageBox.alert('Tree Editor', 'node text changed from ' + origVal + ' to ' + currVal);
+                    }
+                }
+            });
+
+        })
+
+    </script>
+</head>
+<body>
+    <div id="panel"></div>
+    <input id="input" placeholder="Click item to add" style="margin-left: 30px"/>
+    <button id="add">Add</button>
+</body>
+</html>

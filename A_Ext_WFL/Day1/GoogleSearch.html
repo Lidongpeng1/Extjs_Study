@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Google Search</title>
+    <script type="text/javascript" src="../../adapter/ext/ext-base.js"></script>
+    <script type="text/javascript" src="../../ext-all.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css">
+
+    <script type="text/javascript">
+        Ext.onReady(function () {
+
+            var myImg = new Ext.Component({
+                autoEl: {
+                    tag: 'img',
+                    src: './Google.png',
+                    style: {
+                        height: '300px',
+                        width: '600px',
+                        position: 'absolute',
+                        top: '20%',
+                        left: '50%',
+                        'margin-left': '-300px'
+                    },
+
+                }
+            });
+
+            var myBody = new Ext.Container({
+                items: [
+                    {
+                        xtype: 'textfield',
+                        emptyText: 'Search Something...',
+                        style: {
+                            height: '30px',
+                            width: '800px',
+                            position: 'absolute',
+                            top: '55%',
+                            left: '50%',
+                            'margin-left': '-400px',
+                        }
+                    },
+                    {
+                        xtype: 'buttongroup',
+                        frame: false,
+                        style: {
+                            position: 'absolute',
+                            top: '62%',
+                            left: '50%',
+                            "margin-left": '-150px'
+                        },
+                        items: [
+                            {
+                                text: 'Google Search',
+                                xtype: 'button',
+                                scale: 'small',
+                                minWidth: 100,
+                                style: {
+                                    'margin-right': '100px'
+                                }
+                            },
+                            {
+                                text: 'I\'m feeling luckily',
+                                xtype: 'button',
+                                scale: 'small',
+                                minWidth: 100,
+                            }
+                        ]
+                    }
+                ]
+            })
+
+            var container = new Ext.Container({
+                renderTo: document.body,
+                style: {
+                    width: '100%',
+                    heigth: '100%',
+                    padding: '100px',
+                },
+                items: [
+                    myImg,
+                    myBody
+                ]
+            })
+
+        })
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>

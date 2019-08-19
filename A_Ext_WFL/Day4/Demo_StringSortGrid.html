@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Demo Grid</title>
+    <script src="../../adapter/ext/ext-base.js" type="text/javascript"></script>
+    <script src="../../ext-all.js" type="text/javascript"></script>
+    <link href="../../resources/css/ext-all.css" rel="stylesheet" type="text/css">
+
+    <script>
+        Ext.onReady(function() {
+            var cm = new Ext.grid.ColumnModel([
+                {header: '编号', dataIndex: 'id', sortable: true},
+                {header: '名称', dataIndex: 'name'},
+                {header: '描述', dataIndex: 'descn'}
+            ]);
+
+            var data = [
+                ['1', '啊', 'descn1'],
+                ['2', '波', 'descn2'],
+                ['3', '次', 'descn3'],
+                ['4', '的', 'descn4'],
+                ['5', '额', 'descn5'],
+                ['6', '哥', 'descn6'],
+            ];
+
+            var store = new Ext.data.Store({
+                proxy: new Ext.data.MemoryProxy(data),
+                reader: new Ext.data.ArrayReader({}, [
+                    {name: 'id'},
+                    {name: 'name'},
+                    {name: 'descn'},
+                ]),
+                sortInfo: {field: 'name', direction: 'ASC'}
+            });
+            store.load();
+
+            var grid = new Ext.grid.GridPanel({
+                autoHeight: true,
+                renderTo: 'grid',
+                store: store,
+                cm: cm
+            })
+
+        });
+    </script>
+</head>
+<body>
+<div id="grid"></div>
+</body>
+</html>

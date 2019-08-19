@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Demo TreeDrag</title>
+    <script src="../../adapter/ext/ext-base.js" type="text/javascript"></script>
+    <script src="../../ext-all.js" type="text/javascript"></script>
+    <link href="../../resources/css/ext-all.css" rel="stylesheet" type="text/css">
+
+    <script>
+
+        Ext.onReady(function () {
+
+            var root = new Ext.tree.TreeNode({text: 'GuangDong', expanded: true});
+            var gz = new Ext.tree.TreeNode({text: `GuangZhou`});
+            var sz = new Ext.tree.TreeNode({text: 'ShenZhen'});
+            var zh = new Ext.tree.TreeNode({text: 'ZhuHai', expanded: true});
+            var xz = new Ext.tree.TreeNode({text: 'XiangZhou', leaf: true});
+            root.appendChild(gz);
+            root.appendChild(sz);
+            root.appendChild(zh);
+            zh.appendChild(xz);
+
+            var root2 = new Ext.tree.TreeNode({text: 'GuangDong', expanded: true});
+            var gz2 = new Ext.tree.TreeNode({text: `GuangZhou`});
+            var sz2 = new Ext.tree.TreeNode({text: 'ShenZhen'});
+            var zh2 = new Ext.tree.TreeNode({text: 'ZhuHai', expanded: true});
+            var xz2 = new Ext.tree.TreeNode({text: 'XiangZhou', leaf: true});
+            root2.appendChild(gz2);
+            root2.appendChild(sz2);
+            root2.appendChild(zh2);
+            zh2.appendChild(xz2);
+
+            var tree1 = new Ext.tree.TreePanel({
+                renderTo: 'tree1',
+                root: root,
+                width: 200,
+                height: 150,
+                enableDD: true,
+            });
+
+            var tree2 = new Ext.tree.TreePanel({
+                renderTo: 'tree2',
+                root: root2,
+                width: 400,
+                height: 350,
+                enableDD: true,
+            });
+
+            tree1.on('nodedragover', function (e) {
+                if (e.target.leaf) {
+                    e.target.leaf = false;
+                }
+                return true;
+            })
+
+        })
+    </script>
+</head>
+<body>
+    <div id="tree1"></div>
+    <div id="tree2"></div>
+</body>
+</html>

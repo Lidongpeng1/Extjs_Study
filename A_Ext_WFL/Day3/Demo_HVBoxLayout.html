@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Demo HVBoxLayout</title>
+    <script src="../../adapter/ext/ext-base.js" type="text/javascript"></script>
+    <script src="../../ext-all.js" type="text/javascript"></script>
+    <link href="../../resources/css/ext-all.css" rel="stylesheet" type="text/css">
+    <script>
+        Ext.onReady(function () {
+            var viewport = new Ext.Viewport({
+                layout: 'fit',
+                items: [
+                    {
+                        xtype: 'panel',
+                        title: 'HBox Layout',
+                        layout: 'hbox',
+                        layoutConfig: {
+                            align: 'stretch',
+                            pack: 'start',
+                        },
+                        items: [
+                            {
+                                title: 'panel 1',
+                                html: 'content 1',
+                                flex: 1,
+                                items: [
+                                    {
+                                        xtype: 'panel',
+                                        title: 'VBox Layout',
+                                        layout: 'vbox',
+                                        layoutConfig: {
+                                            align: 'center',
+                                            pack: 'start',
+                                        },
+                                        items: [
+                                            {
+                                                title: 'panel 1',
+                                                html: 'content 1',
+                                                flex: 1,
+                                            },
+                                            {
+                                                title: 'panel 2',
+                                                html: 'content 2',
+                                                flex: 1,
+                                            },
+                                            {
+                                                title: 'panel 3',
+                                                html: 'content 3',
+                                                flex: 1,
+                                            },
+                                            {
+                                                title: 'panel 4',
+                                                html: 'content 4',
+                                                flex: 1,
+                                            },
+
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                title: 'panel 2',
+                                html: 'content 2',
+                                flex: 1,
+                            },
+                            {
+                                title: 'panel 3',
+                                html: 'content 3',
+                                flex: 1,
+                            },
+                            {
+                                title: 'panel 4',
+                                html: 'content 4',
+                                flex: 1,
+                            },
+
+                        ]
+                    }
+                ]
+            })
+        })
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>

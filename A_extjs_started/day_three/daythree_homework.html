@@ -66,7 +66,6 @@
 
             // var root = new Ext.tree.AsyncTreeNode({ text: '学校' });
 
-
             var classOne = new Ext.tree.TreeNode({ text: 'Bering' ,"id": 1});
             var classTwo = new Ext.tree.TreeNode({ text: 'Gibraltar' ,"id": 2});
             var classThree = new Ext.tree.TreeNode({ text: 'Suez' ,"id": 3});
@@ -126,7 +125,7 @@
                             id: MaxId++,
                             text: text,
                             leaf: false,
-                            checked: false
+                            // checked: false
                         }))
                     }
                     else if (!node.isLeaf()) {
@@ -195,7 +194,7 @@
                             text: '添加',
                             listeners: {
                                 'click': function () {
-                                    let text = Ext.getCmp('addItem').getValue()
+                                    let text = Ext.getCmp('addItem').getValue();
                                     add(text)
                                 }
                             }

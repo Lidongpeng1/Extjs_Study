@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Demo_Cascade ComboBox</title>
+    <script type="text/javascript" src="../../adapter/ext/ext-base.js"></script>
+    <script type="text/javascript" src="../../ext-all.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css">
+
+    <script type="text/javascript">
+        Ext.onReady(function () {
+            var record = Ext.data.Record.create([
+                {name: 'province'},
+                {name: 'city'}
+            ]);
+            var store = new Ext.data.Store({
+                proxy: new Ext.data.HttpProxy({url: 'CityData.txt'}),
+                reader: new Ext.data.ArrayReader({}, record),
+            });
+
+            var provinceComboBox = new Ext.form.ComboBox({
+                renderTo: 'province',
+                fieldLabel: 'Age',
+                emptyText: 'Choose province',
+                mode: 'remote',
+                triggerAction: 'all',
+                store: store,
+                valueField: 'province',
+                displayField: 'province',
+                pageSize: 3
+            });
+
+            var cityComboBox = new Ext.form.ComboBox({
+                renderTo: 'city',
+                fieldLabel: 'Age',
+                emptyText: 'Choose province',
+                mode: 'local',
+                store: new Ext.data.ArrayStore({
+                    id: 0,
+                    fields: ['city'],
+                    data: []
+                }),
+                valueField: 'city',
+                displayField: 'city'
+            });
+
+            provinceComboBox.on('select', function () {
+                cityComboBox.getStore().data = [['123']]
+            })
+        })
+
+    </script>
+</head>
+<body>
+    <div id="province" style="margin-bottom: 100px"></div>
+    <div id="city"></div>
+</body>
+</html>

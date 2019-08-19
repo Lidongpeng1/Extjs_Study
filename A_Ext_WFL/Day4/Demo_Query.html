@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Query</title>
+    <script src="../../adapter/ext/ext-base.js" type="text/javascript"></script>
+    <script src="../../ext-all.js" type="text/javascript"></script>
+    <link href="../../resources/css/ext-all.css" rel="stylesheet" type="text/css">
+
+    <script>
+        Ext.onReady(function() {
+            Ext.query('p').forEach(function (domEl) {
+                Ext.get(domEl).highlight();
+            });
+
+            Ext.query('html/body/div/span').forEach(function (domEl) {
+                Ext.get(domEl).highlight();
+            });
+
+        })
+    </script>
+</head>
+<body>
+    <p>p1</p>
+    <br/>
+    <div>div.text1</div>
+    <br/>
+    <div>
+        <span>div.span.text2</span>
+    </div>
+    <br/>
+    <div>div.text3</div>
+    <br/>
+    <p>p2</p>
+</body>
+</html>

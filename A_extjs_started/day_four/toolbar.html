@@ -1,0 +1,78 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <title>Customize Component</title>
+    <link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+    <script type="text/javascript" src="../../adapter/ext/ext-base.js"></script>
+    <script type="text/javascript" src="../../ext-all.js"></script>
+    <script>
+
+        //自己注册组件
+        Ext.onReady(function () {
+            var menu = new Ext.menu.Menu({
+                items: [
+                    { text: 'save' }, 
+                    // '-',
+                    { text: 'save as' }
+                ],
+                listeners: {
+                    itemclick: function (item) {
+                        switch(item.text){
+
+                        }
+                    }
+                }
+            });
+            menu.addSeparator();
+            menu.addItem({
+                text:'addItem',
+            })
+            var toolbar = new Ext.Toolbar({
+                renderTo: document.body,
+                width: 600,
+                height: 100,
+                items: [
+                    {
+                        text: 'button',
+                    },
+                    {
+                        xtype: 'tbseparator',
+                    },
+                    // '-',
+                    {
+                        xtype: 'splitbutton',
+                        text: 'split button',
+                        menu:menu,
+                    },
+                    {
+                        xtype: 'tbspacer',//上下两个相隔多远
+                    },
+                    {
+                        xtype: 'textfield',
+                        id:'input',
+                        name: 'field',
+                        emptyText: 'enter search term',
+                        allowBlank: 'false',
+                        blankText: '请输入文本'
+                    },
+                    {
+                        xtype: 'tbfill',
+                    },
+                    // '->', 
+                    {
+                        text: 'left'
+                    }
+                ]
+            })
+
+
+        })
+    </script>
+</head>
+
+<body>
+</body>
+
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../../adapter/ext/ext-base.js" type="text/javascript"></script>
+    <script src="../../ext-all.js" type="text/javascript"></script>
+    <link href="../../resources/css/ext-all.css" rel="stylesheet" type="text/css">
+
+    <script>
+        Ext.onReady(function () {
+            var tb = new Ext.Toolbar({
+                renderTo: document.body,
+                width: 600,
+                height: 100,
+                items: [
+                    {
+                        // xtype: 'button', // default for Toolbars, same as 'tbbutton'
+                        text: 'Button'
+                    },
+                    {
+                        xtype: 'splitbutton', // same as 'tbsplitbutton'
+                        text: 'Split Button'
+                    },
+                    // begin using the right-justified button container
+                    '->', // same as {xtype: 'tbfill'}, // Ext.Toolbar.Fill
+                    {
+                        xtype: 'textfield',
+                        name: 'field1',
+                        emptyText: 'enter search term'
+                    },
+                    // add a vertical separator bar between toolbar items
+                    '-', // same as {xtype: 'tbseparator'} to create Ext.Toolbar.Separator
+                    'text 1', // same as {xtype: 'tbtext', text: 'text1'} to create Ext.Toolbar.TextItem
+                    { xtype: 'tbspacer' },// same as ' ' to create Ext.Toolbar.Spacer
+                    'text 2',
+                    { xtype: 'tbspacer', width: 50 }, // add a 50px space
+                    'text 3'
+                ]
+            });
+            var combo = new Ext.form.ComboBox({
+                store: new Ext.data.ArrayStore({
+                    autoDestroy: true,
+                    fields: ['initials', 'fullname'],
+                    data: [
+                        ['FF', 'Fred Flintstone'],
+                        ['BR', 'Barney Rubble']
+                    ]
+                }),
+                displayField: 'fullname',
+                typeAhead: true,
+                mode: 'local',
+                forceSelection: true,
+                triggerAction: 'all',
+                emptyText: 'Select a name...',
+                selectOnFocus: true,
+                width: 135,
+                getListParent: function () {
+                    return this.el.up('.x-menu');
+                },
+                iconCls: 'no-icon' //use iconCls if placing within menu to shift to right side of menu
+            });
+
+            // put ComboBox in a Menu
+            var menu = new Ext.menu.Menu({
+                id: 'mainMenu',
+                items: [
+                    combo // A Field in a Menu
+                ]
+            });
+
+            // add a Button with the menu
+            tb.add({
+                text: 'Button w/ Menu',
+                menu: menu  // assign menu by instance
+            });
+            tb.doLayout();
+        })
+    </script>
+</head>
+
+<body>
+
+</body>
+
+</html>

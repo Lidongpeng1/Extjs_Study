@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Demo FitLayout</title>
+    <script type="text/javascript" src="../../adapter/ext/ext-base.js"></script>
+    <script type="text/javascript" src="../../ext-all.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css">
+    <script>
+        Ext.onReady(function () {
+            var viewport = new Ext.Viewport({
+                layout: 'fit',
+                items: [{
+                    xtype: 'panel',
+                    title: 'panel1',
+                    html: 'panel1',
+                }]
+            })
+
+        })
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>

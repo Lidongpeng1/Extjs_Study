@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Demo DateGrid</title>
+    <script src="../../adapter/ext/ext-base.js" type="text/javascript"></script>
+    <script src="../../ext-all.js" type="text/javascript"></script>
+    <link href="../../resources/css/ext-all.css" rel="stylesheet" type="text/css">
+
+    <script>
+        Ext.onReady(function() {
+            var cm = new Ext.grid.ColumnModel([
+                {header: '编号', dataIndex: 'id', sortable: true},
+                {header: '名称', dataIndex: 'name'},
+                {header: '描述', dataIndex: 'descn'},
+                {header: '日期', dataIndex: 'date', renderer: Ext.util.Format.dateRenderer('Y-m-d')}
+            ]);
+
+            var data = [
+                ['1', 'name1', 'descn1', '1970-01-15T02:58:04'],
+                ['2', 'name2', 'descn2', '1970-01-15T02:58:04'],
+                ['3', 'name3', 'descn3', '1970-01-15T02:58:04'],
+                ['4', 'name4', 'descn4', '1970-01-15T02:58:04'],
+                ['5', 'name5', 'descn5', '1970-01-15T02:58:04'],
+                ['6', 'name6', 'descn6', '1970-01-15T02:58:04'],
+            ];
+
+            var store = new Ext.data.Store({
+                proxy: new Ext.data.MemoryProxy(data),
+                reader: new Ext.data.ArrayReader({}, [
+                    {name: 'id'},
+                    {name: 'name'},
+                    {name: 'descn'},
+                    {name: 'date'},
+                ])
+            });
+
+            var grid = new Ext.grid.GridPanel({
+                autoHeight: true,
+                renderTo: document.body,
+                store: store,
+                cm: cm
+            });
+
+            store.load();
+
+        });
+    </script>
+</head>
+<body>
+
+</body>
+</html>

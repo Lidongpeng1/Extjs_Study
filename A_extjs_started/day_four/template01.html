@@ -1,0 +1,53 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Customize Component</title>
+    <link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+    <link rel="stylesheet" type="text/css" href="../../resources/css/examples.css" />
+    <!-- LIBS -->
+    <!-- ENDLIBS -->
+    <script type="text/javascript" src="../../adapter/ext/ext-base.js"></script>
+    <script type="text/javascript" src="../../ext-all.js"></script>
+    <script type="text/javascript" src="../../examples.js"></script>
+    <style type="text/css">
+        .add {
+            background: url(../images/1.png) left top no-repeat;
+        }
+    </style>
+    <script>
+        Ext.onReady(function () {
+            // let string1 = '';
+
+            // var data = { name: 'Ethan', age: 22 };
+            // var t = new Ext.Template(
+            //     '<div>',
+            //     '<span>{name} {age}</span>',
+            //     '</div>'
+            // );
+            // var tpl = new Ext.Template([
+            //     '<table><tr>',
+            //         '<td>I am {name},{age} year old.</td>',
+            //     '</tr></table>'
+            // ]);
+
+            var tmpl = Ext.DomHelper.createTemplate({
+                tag: 'tr', children: [
+                    { tag: 'td', html: 'I am {name}, {age} years old.' },
+                    { tag: 'td', html: '<Button>View</Button>' }
+                ]
+            });
+            tmpl.append('template', { name: 'Tom', age: 11 });
+
+
+        });
+    </script>
+
+</head>
+
+<body>
+    <div id="test"></div>
+</body>
+
+</html>

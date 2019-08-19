@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Demo ColumnLayout</title>
+    <script src="../../adapter/ext/ext-base.js" type="text/javascript"></script>
+    <script src="../../ext-all.js" type="text/javascript"></script>
+    <link href="../../resources/css/ext-all.css" rel="stylesheet" type="text/css">
+    <script>
+        Ext.onReady(function () {
+            var viewport = new Ext.Panel({
+                renderTo: document.body,
+                layout: 'column',
+                height: 300,
+                items: [
+                    {
+                        title: 'Column 1',
+                        width: 120,
+                    },
+                    {
+                        title: 'Column 2',
+                        columnWidth: .7,
+                    },
+                    {
+                        title: 'Column 3',
+                        columnWidth: .3
+                    }
+                ]
+            })
+        })
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>

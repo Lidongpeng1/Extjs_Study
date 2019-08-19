@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Demo Template</title>
+    <script src="../../adapter/ext/ext-base.js" type="text/javascript"></script>
+    <script src="../../ext-all.js" type="text/javascript"></script>
+    <link href="../../resources/css/ext-all.css" rel="stylesheet" type="text/css">
+
+    <script>
+        Ext.onReady(function() {
+            var panel = new Ext.Panel({
+                renderTo: document.body,
+                title: 'Greeting',
+                floating: true,
+                shadow: true,
+                draggable: true,
+                collapsible: true,
+                tpl:new Ext.Template([
+                    '<table>' +
+                        '<tr>' +
+                            '<td>I am {name}, {age} uears old.</td>' +
+                            '<td><button>Hello</button></td>' +
+                        '</tr>' +
+                    '</table>'
+                ]),
+                data: {name: 'Tom', age: 11},
+                pageX: 100,
+                pageY: 50,
+                width: 250,
+                height: 150
+            });
+        })
+    </script>
+</head>
+<body>
+
+</body>
+</html>

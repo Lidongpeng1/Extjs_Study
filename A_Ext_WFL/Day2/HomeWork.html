@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>HomeWork</title>
+    <script src="../../adapter/ext/ext-base.js" type="text/javascript"></script>
+    <script src="../../ext-all.js" type="text/javascript"></script>
+    <link href="../../resources/css/ext-all.css" rel="stylesheet" type="text/css">
+    <script>
+        Ext.onReady(function () {
+            var radioGroup1 = new Ext.form.RadioGroup({
+                name: 'radioGroup1',
+                height: 100,
+                columns: 1,
+                style: 'margin: 10px',
+                items: [
+                    {
+                        name: 'radio1',
+                        inputValue: '湿垃圾',
+                        boxLabel: '湿垃圾'
+                    },
+                    {
+                        name: 'radio1',
+                        inputValue: '干垃圾',
+                        boxLabel: '干垃圾'
+                    },
+                    {
+                        name: 'radio1',
+                        inputValue: '有害垃圾',
+                        boxLabel: '有害垃圾'
+                    },
+                    {
+                        name: 'radio1',
+                        inputValue: '可回收物',
+                        boxLabel: '可回收物'
+                    }
+                ],
+                listeners: {
+                    'change': (radio, item) => {
+                        console.log(radioGroup2);
+                        radioGroup2.setValue(item.inputValue)
+                    }
+                }
+            });
+
+
+
+            var checkboxGroup1 = new Ext.form.CheckboxGroup({
+                name: 'checkboxGroup1',
+                height: 100,
+                columns: 1,
+                style: 'margin: 10px',
+                items: [
+                    {boxLabel: '把粑粑用废纸包好带回家冲掉', name: 'checkbox1', id: 'cb1'},
+                    {boxLabel: '受污染的报纸按有害垃圾处理', name: 'checkbox2', id: 'cb2'},
+                    {boxLabel: '没受污染的报纸按可回收垃圾处理', name: 'checkbox3', id: 'cb3'},
+                    {boxLabel: '受污染的报纸浸水后按湿垃圾处理', name: 'checkbox4', id: 'cb4'},
+                ],
+                listeners: {
+                    'change': (checkbox, items) => {
+                        for (item of items) {
+                            checkboxGroup2.setValue(item.name, item.checked)
+                        }
+                    }
+                }
+            });
+
+            var radioGroup2 = new Ext.form.RadioGroup({
+                name: 'radioGroup2',
+                height: 100,
+                columns: 1,
+                style: 'margin: 10px',
+                items: [
+                    {
+                        name: 'radio2',
+                        inputValue: '湿垃圾',
+                        boxLabel: '湿垃圾'
+                    },
+                    {
+                        name: 'radio2',
+                        inputValue: '干垃圾',
+                        boxLabel: '干垃圾'
+                    },
+                    {
+                        name: 'radio2',
+                        inputValue: '有害垃圾',
+                        boxLabel: '有害垃圾'
+                    },
+                    {
+                        name: 'radio2',
+                        inputValue: '可回收物',
+                        boxLabel: '可回收物'
+                    }
+                ],
+                listeners: {
+                    'change': (radio, item) => {
+                        console.log(radioGroup1);
+                        radioGroup1.setValue(item.inputValue)
+                    }
+                }
+            });
+            var checkboxGroup2 = new Ext.form.CheckboxGroup({
+                name: 'checkboxGroup2',
+                height: 100,
+                columns: 1,
+                style: 'margin: 10px',
+                items: [
+                    {boxLabel: '把粑粑用废纸包好带回家冲掉', name: 'checkbox1'},
+                    {boxLabel: '受污染的报纸按有害垃圾处理', name: 'checkbox2'},
+                    {boxLabel: '没受污染的报纸按可回收垃圾处理', name: 'checkbox3'},
+                    {boxLabel: '受污染的报纸浸水后按湿垃圾处理', name: 'checkbox4'},
+                ],
+                listeners: {
+                    'change': (checkbox, items) => {
+                        for (item of items) {
+                            checkboxGroup1.setValue(item.name, item.checked)
+                        }
+                    }
+                }
+            });
+
+            var navHandler = function (direction) {
+                card.layout.setActiveItem(Number(card.layout.activeItem.id.substring(5)) + direction);
+                // console.log(card.layout.activeItem.items);
+            };
+            var card = new Ext.Panel({
+                renderTo: document.body,
+                title: 'Example Wizard',
+                layout: 'card',
+                activeItem: 0, // make sure the active item is set on the container config!
+                height: 400,
+                width: 500,
+                bodyStyle: 'padding:15px',
+                layoutOnCardChange: true,
+                defaults: {
+                    // applied to each contained panel
+                    border: false
+                },
+                // just an example of one possible navigation scheme, using buttons
+                bbar: [
+                    {
+                        id: 'move-prev',
+                        text: 'Back',
+                        handler: navHandler.createDelegate(this, [-1]),
+                    },
+                    '->', // greedy spacer so that the buttons are aligned to each side
+                    {
+                        id: 'move-next',
+                        text: 'Next',
+                        handler: navHandler.createDelegate(this, [1])
+                    }
+                ],
+                // the panels (or "cards") within the layout
+                items: [
+                    {
+                        id: 'card-0',
+                        items: [
+                            {
+                                title: 'Q1:番茄酱属于以下哪种垃圾？（单选）',
+                                items: [radioGroup1]
+                            }
+                        ]
+                    },
+                    {
+                        id: 'card-1',
+                        items: [
+                            {
+                                title: 'Q50:王大叔出门遛狗后，哪些是正确狗粑粑的方法？（多选）',
+                                items: [checkboxGroup1]
+                            }
+                        ]
+                    },
+                    {
+                        id: 'card-2',
+                        buttons: [{
+                            text: "submit",
+                            handler: function () {
+                                Ext.Msg.alert('Success', 'Done')
+                            }
+                        }],
+                        items: [
+                            {
+                                title: 'Q1:番茄酱属于以下哪种垃圾？（单选）',
+                                items: [radioGroup2]
+                            },
+                            {
+                                title: 'Q50:王大叔出门遛狗后，哪些是正确狗粑粑的方法？（多选）',
+                                items: [checkboxGroup2]
+                            }
+                        ]
+                    }
+                ]
+            });
+        });
+
+    </script>
+
+</head>
+<body>
+
+</body>
+</html>

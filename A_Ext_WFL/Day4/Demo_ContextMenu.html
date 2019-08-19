@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Context Menu</title>
+    <script src="../../adapter/ext/ext-base.js" type="text/javascript"></script>
+    <script src="../../ext-all.js" type="text/javascript"></script>
+    <link href="../../resources/css/ext-all.css" rel="stylesheet" type="text/css">
+
+    <script>
+        Ext.onReady(function() {
+
+            var myMenu = new Ext.menu.Menu({
+                items: [
+                    {
+                        text: 'Color',
+                        menu: {
+                            items: [
+                                {text: 'red'},
+                                {text: 'green'},
+                                {text: 'blue'}
+                            ]
+                        }
+                    },
+                    {
+                        text: 'Home'
+                    },
+                    {
+                        text: 'Help'
+                    }
+                ]
+            });
+
+            Ext.get(document).on('myMenu', function (e) {
+                e.preventDefault();
+                myMenu.showAt(e.getXY());
+            });
+
+            var toolbar = new Ext.Toolbar({
+               renderTo: document.body,
+               items: [{
+                   text: 'test',
+                   menu: myMenu
+               }]
+            });
+        })
+    </script>
+</head>
+<body>
+
+</body>
+</html>

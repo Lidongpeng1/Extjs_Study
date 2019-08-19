@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Demo BasicForm</title>
+    <script type="text/javascript" src="../../adapter/ext/ext-base.js"></script>
+    <script type="text/javascript" src="../../ext-all.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css">
+
+    <script type="text/javascript">
+        Ext.onReady(function () {
+            new Ext.form.FormPanel({
+                id: 'form',
+                renderTo: document.body,
+                defaultType: 'textfield',
+                labelAlign: 'center',
+                title: 'login',
+                items: [
+                    {
+                        fieldLabel: 'account',
+                    },
+                    {
+                        fieldLabel: 'password',
+                        inputType: 'password'
+                    },
+                    {
+                        fieldLabel: 'verify code'
+                    }
+                ],
+                buttons: [
+                    {
+                        text: 'submit',
+                        type: 'submit',
+                        handler: function () {
+                            Ext.Msg.alert('submit','Hello World!')
+                        }
+                    },
+                    {
+                        text: 'cancel',
+                        type: 'reset',
+                        handler: function () {
+                            Ext.getCmp('form').getForm().reset();
+                        }
+                    }
+                ]
+            })
+        })
+    </script>
+
+
+</head>
+<body>
+
+</body>
+</html>

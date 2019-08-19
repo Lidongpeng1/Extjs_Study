@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Demo TreeFilter</title>
+    <script src="../../adapter/ext/ext-base.js" type="text/javascript"></script>
+    <script src="../../ext-all.js" type="text/javascript"></script>
+    <link href="../../resources/css/ext-all.css" rel="stylesheet" type="text/css">
+
+    <script>
+        Ext.onReady(function () {
+            var root = new Ext.tree.TreeNode({text: 'GuangDong', expanded: true});
+            var gz = new Ext.tree.TreeNode({text: `GuangZhou`});
+            var sz = new Ext.tree.TreeNode({text: 'ShenZhen'});
+            var zh = new Ext.tree.TreeNode({text: 'ZhuHai', expanded: true});
+            var xz = new Ext.tree.TreeNode({text: 'XiangZhou', leaf: true});
+            root.appendChild(gz);
+            root.appendChild(sz);
+            root.appendChild(zh);
+            zh.appendChild(xz);
+
+            var tree = new Ext.tree.TreePanel({
+                renderTo: 'test',
+                root: root,
+                width: 200,
+                height: 150,
+                enableDD: true,
+
+            });
+
+            tree.expandAll();
+
+            var treeFilter = new Ext.tree.TreeFilter(tree, {
+                clearBlank: true,
+                autoClear: true
+            });
+
+            Ext.get('inputFilter').on('keyup', function () {
+                console.log(Ext.get('inputFilter').valueOf().getValue());
+                treeFilter.filter(Ext.get('inputFilter').valueOf().getValue());
+            });
+
+            Ext.get('filter').on('click', function () {
+                treeFilter.filter('G');
+            });
+
+            Ext.get('reset').on('click', function () {
+                treeFilter.clear();
+            });
+
+        })
+    </script>
+</head>
+<body>
+    <div id="test"></div>
+    <input id="inputFilter"/>
+    <button id="filter">Filter:'G'</button>
+    <button id="reset">Reset</button>
+</body>
+</html>

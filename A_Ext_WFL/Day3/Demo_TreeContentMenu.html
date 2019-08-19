@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Demo TreeContentMenu</title>
+    <script src="../../adapter/ext/ext-base.js" type="text/javascript"></script>
+    <script src="../../ext-all.js" type="text/javascript"></script>
+    <link href="../../resources/css/ext-all.css" rel="stylesheet" type="text/css">
+
+    <script>
+        Ext.onReady(function () {
+
+            var root = new Ext.tree.TreeNode({text: 'GuangDong', expanded: true});
+            var gz = new Ext.tree.TreeNode({text: `GuangZhou`, leaf: true});
+            var sz = new Ext.tree.TreeNode({text: 'ShenZhen', leaf: true});
+            var zh = new Ext.tree.TreeNode({text: 'ZhuHai', expanded: true});
+            var xz = new Ext.tree.TreeNode({text: 'XiangZhou', leaf: true});
+            root.appendChild(gz);
+            root.appendChild(sz);
+            root.appendChild(zh);
+            zh.appendChild(xz);
+
+            var menu = new Ext.menu.Menu({
+                items: [{
+                    id: 'deleteNode',
+                    text: 'Delete Node'
+                },{
+                    id: 'showNode',
+                    text: 'Show Node'
+                }],
+                listeners: {
+                    itemclick: function (item) {
+                        switch (item.id) {
+                            case 'deleteNode':
+                                var currentNode = item.parentMenu.contextNode;
+                                if (currentNode.parentNode) {
+                                    currentNode.remove();
+                                }
+                                break;
+                            case 'showNode':
+                                Ext.MessageBox.alert('Node Info', item.parentMenu.contextNode);
+                                break;
+                        }
+                    }
+                }
+            });
+
+            var tree = new Ext.tree.TreePanel({
+                renderTo: document.body,
+                root: root,
+                contextMenu: menu,
+                listeners: {
+                    contextMenu: function (node, e) {
+                        node.select();
+                        var treeContentMenu = node.getOwnerTree().contextMenu;
+                        treeContentMenu.contextNode = node;
+                        treeContentMenu.showAt(e.getXY());
+                    }
+                }
+            });
+
+
+        })
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Demo AccordionLayout</title>
+    <script type="text/javascript" src="../../adapter/ext/ext-base.js"></script>
+    <script type="text/javascript" src="../../ext-all.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css">
+
+    <script>
+        Ext.onReady(function () {
+            var viewport = new Ext.Viewport({
+                layout: 'accordion',
+                items: [
+                    {region: 'north', html: 'north', height: 100, split: true, collapsible: true},
+                    {region: 'south', html: 'south', height: 100},
+                    {region: 'west', html: 'west', width: 100, collapsible: true},
+                    {region: 'east', html: 'east', width: 100},
+                    {region: 'center', html: 'center'},
+                ]
+            })
+        })
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>

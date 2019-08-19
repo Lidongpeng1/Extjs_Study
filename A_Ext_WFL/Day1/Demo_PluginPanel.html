@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Demo Plugin Panel</title>
+    <script type="text/javascript" src="../../adapter/ext/ext-base.js"></script>
+    <script type="text/javascript" src="../../ext-all.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css">
+
+    <script type="text/javascript">
+        Ext.onReady(function () {
+            Ext.ns('com.ita');
+            ColorPlugin = function () {
+                this.init = function (cmp) {
+                    if (cmp.title.indexOf('Plugin') === -1)
+                        cmp.hidden = true;
+                };
+            };
+            Ext.preg('com.ita.ColorPlugin', ColorPlugin);
+
+            var panel = new Ext.Panel({
+                renderTo: 'test',
+                title: 'Greeting',
+                floating: true,
+                shadow: true,
+                draggable: true,
+                collapsible: true,
+                html: 'Hello World!',
+                pageX: 100,
+                pageY: 50,
+                width: 400,
+                height: 400,
+                items:[
+                    {
+                        xtype: 'panel',
+                        title: 'Plugin Greeting 1',
+                        collapsible: true,
+                        html: 'Hello World!',
+                        width: 200,
+                        height: 150,
+                        plugins: [{ptype: 'com.ita.ColorPlugin'}],
+                    },
+                    {
+                        xtype: 'panel',
+                        title: 'xxx Greeting 2',
+                        collapsible: true,
+                        html: 'Hello World!',
+                        width: 200,
+                        height: 150,
+                        plugins: [{ptype: 'com.ita.ColorPlugin'}],
+                    }
+                ]
+            });
+        });
+    </script>
+</head>
+<body>
+<div id="test"></div>
+</body>
+</html>

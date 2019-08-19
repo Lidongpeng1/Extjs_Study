@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Demo ComboBox</title>
+    <script type="text/javascript" src="../../adapter/ext/ext-base.js"></script>
+    <script type="text/javascript" src="../../ext-all.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css">
+
+    <script type="text/javascript">
+        Ext.onReady(function () {
+            var localComboBox = new Ext.form.ComboBox({
+                id: 'age1',
+                renderTo: 'local',
+                fieldLabel: 'Age',
+                emptyText: 'Choose / Input your age',
+                mode: 'local',
+                store: new Ext.data.ArrayStore({
+                    id: 0,
+                    fields: ['age', 'description'],
+                    data: [
+                        [22, 'i\'m 22 years old'],
+                        [23, 'i\'m 23 years old'],
+                        [24, 'i\'m 24 years old'],
+                        [25, 'i\'m 25 years old'],
+                        [26, 'i\'m 26 years old'],
+                        [27, 'i\'m 27 years old'],
+                    ]
+                }),
+                valueField: 'description',
+                displayField: 'age'
+            });
+
+            var record = Ext.data.Record.create([
+                {name: 'age'},
+                {name: 'description'}
+            ]);
+            var store = new Ext.data.Store({
+                proxy: new Ext.data.HttpProxy({url: 'RemoteComboBoxData.txt'}),
+                reader: new Ext.data.ArrayReader({}, record),
+            });
+            var remoteComboBox = new Ext.form.ComboBox({
+                id: 'age2',
+                renderTo: 'remote',
+                fieldLabel: 'Age',
+                emptyText: 'Choose your age',
+                mode: 'remote',
+                triggerAction: 'all',
+                store: store,
+                valueField: 'age',
+                displayField: 'description',
+                pageSize: 3
+            })
+        })
+
+    </script>
+</head>
+<body>
+    <div id="local" style="margin-bottom: 100px"></div>
+    <div id="remote"></div>
+
+</body>
+</html>

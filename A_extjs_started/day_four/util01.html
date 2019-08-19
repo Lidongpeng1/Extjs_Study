@@ -1,0 +1,75 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Customize Component</title>
+    <link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+    <link rel="stylesheet" type="text/css" href="../../resources/css/examples.css" />
+    <!-- LIBS -->
+    <!-- ENDLIBS -->
+    <script type="text/javascript" src="../../adapter/ext/ext-base.js"></script>
+    <script type="text/javascript" src="../../ext-all.js"></script>
+    <script type="text/javascript" src="../../examples.js"></script>
+
+    <style type="text/css">
+        .add {
+            background: url(../images/1.png) left top no-repeat;
+        }
+    </style>
+    <script>
+        Ext.onReady(function() {
+
+
+            var panel = new Ext.Panel({
+                renderTo: 'test',
+                items:[
+                    {
+                        xtype: 'button',
+                        iconCls: "add",
+                        iconAlign: 'left',//'top-right-bottom-left'
+                        width:80,
+                        height:20,
+                        text:'添加',
+                        // menu:
+                        //     {
+                        //         items: [
+                        //             {
+                        //                 text: '选项1'
+                        //             }, {
+                        //                 text: '选项2'
+                        //             }, {
+                        //                 text: '选项3',
+                        //                 handler: function () {
+                        //                     Ext.Msg.alert("提示", "来自菜单的消息");
+                        //                 }
+                        //             }
+                        //         ]
+                        //     },
+                        arrowAlign: 'right',//right/buttom
+                        listeners: {
+                            'click': function () {
+                                // Ext.Msg.alert("提示", "来自菜单的消息");
+                                var dom = Ext.get("test");
+                                console.log(dom);
+
+                                var body = Ext.getBody();
+                                console.log(body);
+
+                                Ext.example.msg('提示', 'Hello World!');
+                            }
+                        }
+                    },
+
+                ]
+            });
+            panel.render();
+        });
+    </script>
+    <style type="text/css">
+
+    </style>
+</head>
+<body>
+<div id="test"></div>
+</body>
+</html>

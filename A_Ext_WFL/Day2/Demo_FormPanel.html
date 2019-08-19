@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Demo FromPanel</title>
+    <script type="text/javascript" src="../../adapter/ext/ext-base.js"></script>
+    <script type="text/javascript" src="../../ext-all.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css">
+
+    <script type="text/javascript">
+        Ext.onReady(function () {
+            new Ext.form.FormPanel({
+                renderTo: document.body,
+                defaultType: 'textfield',
+                labelAlign: 'center',
+                title: 'simple form',
+                labelWidth: 50,
+                frame: true,
+                width: 300,
+                items: [
+                    {
+                        fieldLabel: 'name'
+                    }
+                ],
+                buttons: [
+                    {
+                        text: 'submit'
+                    },
+                    {
+                        text: 'cancel'
+                    }
+                ]
+            })
+        })
+    </script>
+
+</head>
+<body>
+
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Demo ColorGrid</title>
+    <script src="../../adapter/ext/ext-base.js" type="text/javascript"></script>
+    <script src="../../ext-all.js" type="text/javascript"></script>
+    <link href="../../resources/css/ext-all.css" rel="stylesheet" type="text/css">
+
+    <script>
+        Ext.onReady(function() {
+            var cm = new Ext.grid.ColumnModel([
+                {header: '编号', dataIndex: 'id', sortable: true},
+                {header: '性别', dataIndex: 'sex', renderer: function (value) {
+                        if (value === 'male') {
+                            return '<span style="color: red; font-weight: bold">红男</span>';
+                        } else {
+                            return '<span style="color: green; font-weight: bold">绿女</span>';
+                        }
+                    }},
+                {header: '描述', dataIndex: 'descn'},
+                {header: '日期', dataIndex: 'date', renderer: Ext.util.Format.dateRenderer('Y-m-d')}
+            ]);
+
+            var data = [
+                ['1', 'male', 'descn1', '1970-01-15T02:58:04'],
+                ['2', 'female', 'descn2', '1970-01-15T02:58:04'],
+                ['3', 'male', 'descn3', '1970-01-15T02:58:04'],
+                ['4', 'female', 'descn4', '1970-01-15T02:58:04'],
+                ['5', 'female', 'descn5', '1970-01-15T02:58:04'],
+                ['6', 'male', 'descn6', '1970-01-15T02:58:04'],
+            ];
+
+            var store = new Ext.data.Store({
+                proxy: new Ext.data.MemoryProxy(data),
+                reader: new Ext.data.ArrayReader({}, [
+                    {name: 'id'},
+                    {name: 'sex'},
+                    {name: 'descn'},
+                    {name: 'date'},
+                ])
+            });
+
+            var grid = new Ext.grid.GridPanel({
+                autoHeight: true,
+                renderTo: document.body,
+                store: store,
+                cm: cm
+            });
+
+            store.load();
+
+        });
+    </script>
+</head>
+<body>
+
+</body>
+</html>

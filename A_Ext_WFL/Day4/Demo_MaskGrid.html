@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Demo MaskGrid</title>
+    <script src="../../adapter/ext/ext-base.js" type="text/javascript"></script>
+    <script src="../../ext-all.js" type="text/javascript"></script>
+    <link href="../../resources/css/ext-all.css" rel="stylesheet" type="text/css">
+
+    <script>
+        Ext.onReady(function() {
+            var cm = new Ext.grid.ColumnModel([
+                {header: '编号', dataIndex: 'id', sortable: true},
+                {header: '名称', dataIndex: 'name'},
+                {header: '描述', dataIndex: 'descn'}
+            ]);
+
+            var store = new Ext.data.Store({
+                proxy: new Ext.data.ScriptTagProxy({url: 'http://www.baidu.com'}),
+                reader: new Ext.data.ArrayReader({}, [
+                    {name: 'id'},
+                    {name: 'name'},
+                    {name: 'descn'},
+                ])
+            });
+
+            var grid = new Ext.grid.GridPanel({
+                width: 350,
+                height: 150,
+                renderTo: 'grid',
+                loadMask: true,
+                store: store,
+                cm: cm
+            });
+
+            store.load();
+
+        });
+    </script>
+</head>
+<body>
+    <div id="grid"></div>
+</body>
+</html>

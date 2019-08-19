@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Demo Panel</title>
+    <script type="text/javascript" src="../../adapter/ext/ext-base.js"></script>
+    <script type="text/javascript" src="../../ext-all.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css">
+
+    <script type="text/javascript">
+        Ext.onReady(function () {
+           var panel = new Ext.Panel({
+               renderTo: 'test',
+               title: 'Greeting',
+               floating: true,
+               shadow: true,
+               draggable: true,
+               collapsible: true,
+               html: '<span style="color: red">Hello World!</span>',
+               pageX: 100,
+               pageY: 50,
+               width: 400,
+               height: 400,
+               items:[
+                   {
+                       xtype: 'panel',
+                       title: 'Sub Greeting 1',
+                       collapsible: true,
+                       html: '<span style="color: yellow">Hello World!</span>',
+                       width: 200,
+                       height: 150
+                   },
+                   {
+                       xtype: 'panel',
+                       title: 'Sub Greeting 2',
+                       collapsible: true,
+                       html: '<span style="color: green">Hello World!</span>',
+                       width: 200,
+                       height: 150
+                   }
+               ]
+           });
+        });
+    </script>
+</head>
+<body>
+    <div id="test"></div>
+</body>
+</html>

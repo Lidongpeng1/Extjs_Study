@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="../../adapter/ext/ext-base.js"></script>
+    <script type="text/javascript" src="../../ext-all.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css">
+
+    <script type="text/javascript">
+        Ext.onReady(function () {
+            Ext.QuickTips.init();
+            var form = new Ext.form.FormPanel({
+                id: 'testForm',
+                renderTo: document.body,
+                defaultType: 'textfield',
+                labelAlignL: 'center',
+                title: 'tips',
+                labelWidth: 80,
+                frame: true,
+                width: 400,
+                items: [
+                    {
+                        id: 'quickTips',
+                        msgTarget: 'quick',
+                        fieldLabel: 'quick tips'
+                    },
+                    {
+                        id: 'titleTips',
+                        msgTarget: 'title',
+                        fieldLabel: 'title tips'
+                    },
+                    {
+                        id: 'sideTips',
+                        msgTarget: 'side',
+                        fieldLabel: 'side tips'
+                    },
+                    {
+                        id: 'underTips',
+                        msgTarget: 'under',
+                        fieldLabel: 'under tips'
+                    },
+                    {
+                        id: 'elementTips',
+                        msgTarget: 'element',
+                        fieldLabel: 'element tips'
+                    }
+                ],
+                buttons: [
+                    {
+                        text: 'quickTip',
+                        listeners: {
+                            'click': function (btn, form) {
+                                Ext.getCmp('testForm').getForm().markInvalid([
+                                    {id: 'quickTips', msg: 'field is required!'},
+                                    {id: 'titleTips', msg: 'field is required!'},
+                                    {id: 'sideTips', msg: 'field is required!'},
+                                    {id: 'underTips', msg: 'field is required!'},
+                                    {id: 'elementTips', msg: 'field is required!'},
+                                ])
+                            }
+                        }
+                    }
+                ]
+            })
+        })
+    </script>
+
+
+</head>
+<body>
+
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Active Bird</title>
+    <script type="text/javascript" src="../../adapter/ext/ext-base.js"></script>
+    <script type="text/javascript" src="../../ext-all.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css">
+
+    <script type="text/javascript">
+        Ext.onReady(function () {
+            Bird = Ext.extend(Ext.util.Observable, {
+                constructor: function (name) {
+                    this.name = name;
+                    this.addEvents('fly', 'sing');
+                    Bird.superclass.constructor.call(this, name);
+                },
+                info: function (action) {
+                    return this.name + ' is ' + action + 'ing';
+                }
+            });
+
+            var bird = new Bird('Small Bird');
+            bird.on('fly', function () {
+                Ext.Msg.alert('Flying Bird', bird.info('fly'))
+            });
+            bird.on('sing', function () {
+                Ext.Msg.alert('Singing Bird', bird.info('sing'))
+            });
+
+            Ext.get('fly').on('click', function () {
+                bird.fireEvent('fly');
+                console.log('bird fly');
+            });
+
+            Ext.get('sing').on('click', function () {
+                bird.fireEvent('sing');
+                console.log('bird sing');
+            });
+        })
+
+    </script>
+</head>
+<body>
+    <button id="fly">Fly</button>
+    <button id="sing">Sing</button>
+
+</body>
+</html>

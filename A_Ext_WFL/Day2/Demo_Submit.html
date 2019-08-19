@@ -1,0 +1,84 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <title>Demo Submit</title>
+    <link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+    <!-- LIBS -->
+    <script type="text/javascript" src="../../adapter/ext/ext-base.js"></script>
+    <!-- ENDLIBS -->
+    <script type="text/javascript" src="../../ext-all.js"></script>
+    <script>
+        Ext.onReady(function() {
+            var reader = new Ext.data.JsonReader({},[
+                {name: 'name', type: 'string'},
+                {name: 'age', type: 'int'},
+                {name: 'birthday', type: 'date', dateFormat: 'Y-m-dTH:i:s'},
+                {name: 'combo', type: 'combo'}
+            ]);
+            var form = new Ext.form.FormPanel({
+                id: 'testForm',
+                renderTo: 'test',
+                defaultType: 'textfield',
+                labelAlign: 'center',
+                title: 'auto fill data in form',
+                labelWidth: 50,
+                frame: true,
+                width: 300,
+                reader: reader,
+                url: 'form2.jsp',
+                items: [{
+                    name: 'name',
+                    fieldLabel: 'Name'
+                }, {
+                    name: 'age',
+                    fieldLabel: 'Age'
+                }, {
+                    xtype: 'datefield',
+                    name: 'birthday',
+                    fieldLabel: 'Birthday'
+                }, {
+                    xtype: 'combo',
+                    name: 'combo',
+                    fieldLabel: 'Combo'
+                }],
+                buttons:[
+                    {
+                        text: 'load',
+                        listeners:{
+                            'click': function(btn, e){
+                                Ext.getCmp('testForm').getForm().load({url: 'json_reader.txt'});
+                            }
+                        }
+                    },
+                    {
+                        text: 'submit',
+                        handler: function () {
+                            form.getForm().submit({
+                                success: function (form, action) {
+                                    Ext.Msg.alert('Success', action.result.msg)
+                                },
+                                failure: function (form, action) {
+                                    switch (action.failureType) {
+                                        case Ext.form.Action.CLIENT_INVALID:
+                                            Ext.Msg.alert('Failure', 'Form fields may not be submitted with invalid client');
+                                            break;
+                                        case Ext.form.Action.CONNECT_FAILURE:
+                                            Ext.Msg.alert('Failure', 'Ajax communication failed');
+                                            break;
+                                        case Ext.form.Action.SERVER_INVALID:
+                                            Ext.Msg.alert('Failure', action.result.msg);
+                                            break;
+                                    }
+                                }
+                            })
+                        }
+                    }
+                ]
+            });
+        });
+    </script>
+</head>
+<body>
+<div id="test"></div>
+</body>
+</html>

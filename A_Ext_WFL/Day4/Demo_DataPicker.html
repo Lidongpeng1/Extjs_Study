@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DataPicker</title>
+    <script src="../../adapter/ext/ext-base.js" type="text/javascript"></script>
+    <script src="../../ext-all.js" type="text/javascript"></script>
+    <link href="../../resources/css/ext-all.css" rel="stylesheet" type="text/css">
+
+    <script>
+        Ext.onReady(function() {
+
+            var toolbar = new Ext.Toolbar({
+                renderTo: document.body,
+                width: 600,
+                height: 100,
+                items: [
+                    {
+                        text: 'DatePicker',
+                        menu: new Ext.menu.DateMenu({
+                            handler: function (date) {
+                                Ext.Msg.alert('Info', date.value.format('Y/m/d'))
+                            }
+                        })
+                    },{
+                        text: 'ColorPicker',
+                        menu: new Ext.menu.ColorMenu({
+                            handler: function (color) {
+                                Ext.Msg.alert('Info', color.value)
+                            }
+                        })
+                    }
+                ]
+            })
+        })
+    </script>
+</head>
+<body>
+
+</body>
+</html>

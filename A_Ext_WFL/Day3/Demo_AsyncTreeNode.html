@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Demo AsyncTreeNode</title>
+    <script src="../../adapter/ext/ext-base.js" type="text/javascript"></script>
+    <script src="../../ext-all.js" type="text/javascript"></script>
+    <link href="../../resources/css/ext-all.css" rel="stylesheet" type="text/css">
+
+    <script>
+        Ext.onReady(function () {
+            Ext.QuickTips.init();
+
+            var root = new Ext.tree.TreeNode({text: 'GuangDong', expanded: true});
+            var tree = new Ext.tree.TreePanel({
+                renderTo: document.body,
+                useArrows: true,
+                root: root
+            });
+            var gz = new Ext.tree.TreeNode({text: `GuangZhou`, leaf: true});
+            var sz = new Ext.tree.TreeNode({text: 'ShenZhen', leaf: true});
+            var zh = new Ext.tree.TreeNode({text: 'ZhuHai', expanded: true});
+            var xz = new Ext.tree.TreeNode({text: 'XiangZhou', leaf: true});
+            root.appendChild(gz);
+            root.appendChild(sz);
+            root.appendChild(zh);
+            zh.appendChild(xz);
+
+            setTreeTips(root);
+            function setTreeTips(root) {
+                if (root.isLeaf()) {
+                    if (root.text.indexOf('ang') !== -1) {
+                        root.setTooltip('I\'m ' + root.text);
+                    }
+                } else {
+                    for (let childRoot of root.childNodes) {
+                        setTreeTips(childRoot);
+                    }
+                }
+            }
+
+
+        })
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>

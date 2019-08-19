@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Demo_Plugin</title>
+    <script type="text/javascript" src="../../adapter/ext/ext-base.js"></script>
+    <script type="text/javascript" src="../../ext-all.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css">
+
+    <script type="text/javascript">
+        Ext.onReady(function () {
+            Ext.ns('com.ita');
+            ColorPlugin = function () {
+                this.init = function (cmp) {
+                    if (cmp.html.indexOf('plugin') !== -1)
+                        cmp.bodyStyle = 'color: red';
+                };
+            };
+            Ext.preg('com.ita.ColorPlugin', ColorPlugin);
+
+            MyPanel = Ext.extend(Ext.Panel, {
+                initComponent: function (config) {
+                    Ext.applyIf(this, config);
+                    MyPanel.superclass.initComponent.call(this);
+                },
+                plugins: [{ptype: 'com.ita.ColorPlugin'}]
+            });
+
+            var myPanel = new MyPanel({
+                renderTo: document.body,
+                title: 'Extend and Plugin',
+                bodyStyle: 'color: green',
+                html: 'if this sentence contains substring plugin, it will show red font color.',
+                height: 150
+            });
+        })
+    </script>
+</head>
+<body>
+
+</body>
+</html>
