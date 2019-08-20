@@ -1,0 +1,5 @@
+1. button background color
+2. cannot access example by local file access.
+3. anchor layout with 'right xxx'
+4. column layout item display.
+5. absloute layout with anchor property, element is missing

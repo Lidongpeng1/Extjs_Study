@@ -12,6 +12,9 @@
 		Ext.onReady(function() {
 			Ext.ns('com.ita');
 			com.ita.CancelButton = Ext.extend(Ext.Button, {
+				buttonSelector: 'testId',
+				style: {backgroundColor: 'red'},
+				template: new Ext.Template('<button type="button" id="testId" style="background-color:red">Cancel</button>'),
 				text : 'Cancel',
 				initComponent : function() {
 					com.ita.CancelButton.superclass.initComponent.call(this);

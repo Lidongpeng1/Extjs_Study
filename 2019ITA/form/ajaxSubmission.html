@@ -1,0 +1,43 @@
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=gbk">
+        <title>ajax submission</title>
+        <link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+        <script type="text/javascript" src="../../adapter/ext/ext-base.js"></script>
+        <script type="text/javascript" src="../../ext-all.js"></script>
+        <script type="text/javascript">
+Ext.onReady(function(){
+
+    var form = new Ext.form.FormPanel({
+		id: 'testForm',
+        defaultType: 'textfield',
+        labelAlign: 'right',
+        title: 'form',
+        labelWidth: 80,
+        buttonAlign: 'center',
+        frame:true,
+        width: 220,
+        items: [{
+            fieldLabel: 'Please Input',
+            name: 'text'
+        }],
+        buttons: [{
+            text: 'Submit',
+            handler: function() {
+                Ext.Ajax.request({
+					method:'POST', 
+					form: 'testForm', 
+					url: 'abc/cd'
+				});
+            }
+        }]
+    });
+    form.render("form");
+
+});
+        </script>
+    </head>
+    <body>
+        <div id="form" style="margin:100px;"></div>
+    </body>
+</html>

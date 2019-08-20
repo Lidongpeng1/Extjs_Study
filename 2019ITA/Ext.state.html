@@ -1,0 +1,55 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+	<title>Ext.state</title>
+	<link rel="stylesheet" type="text/css" href="../resources/css/ext-all.css" />
+ 	<!-- LIBS -->
+ 	<script type="text/javascript" src="../adapter/ext/ext-base.js"></script>
+ 	<!-- ENDLIBS -->
+    <script type="text/javascript" src="../ext-all.js"></script>
+	<script>
+		Ext.onReady(function() {
+			Ext.state.Manager.setProvider(new Ext.state.CookieProvider({
+				expires: new Date(new Date().getTime()+(1000*60*60*24*7)) //7 days from now
+			}));
+			var viewport = new Ext.Viewport({
+				layout: 'border',
+				stateId: 'testViewport',
+				stateful:true,
+				items: [
+					{
+						region: 'north',
+						height: 50,
+						split: true
+					}, {
+						region: 'south',
+						height: 50,
+						split: true
+					}, {
+						region: 'west',
+						height: 50,
+						split: true
+					}, {
+						region: 'east',
+						height: 50,
+						split: true
+					}, {
+						region: 'center'
+					}
+				]
+			});
+			var window = new Ext.Window({
+				title: 'Greeting',
+				stateful:true,
+				width: 300,
+				height: 200
+			});
+			window.show();
+		});
+	</script>
+</head>
+<body>
+<div id="test"></div>
+</body>
+</html>

@@ -1,28 +1,12 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=gbk">
-        <title>03.grid</title>
+        <title>ColumnModel Practice</title>
         <link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
         <script type="text/javascript" src="../../adapter/ext/ext-base.js"></script>
         <script type="text/javascript" src="../../ext-all.js"></script>
         <script type="text/javascript">
 Ext.onReady(function(){
-
-    var cm = new Ext.grid.ColumnModel([
-        {header:'编号',dataIndex:'id'},
-        {header:'性别',dataIndex:'sex',renderer:function(value){
-                if (value == 'male') {
-                    return "<span style='color:red;font-weight:bold;'>红男</span>";
-                } else {
-                    return "<span style='color:green;font-weight:bold;'>绿女</span>";
-                }
-            }},
-        {header:'名称',dataIndex:'name'},
-        {header:'描述',dataIndex:'descn'}
-    ]);
-    //上面的方法实现了后台传入数据与前台显示数据的映射
-    //注意:不仅可以返回数据，还可以返回样式
-/*
     function renderSex(value) {
         if (value == 'male') {
             return "<span style='color:red;font-weight:bold;'>红男</span><img src='user_male.png' />";
@@ -49,7 +33,6 @@ Ext.onReady(function(){
         {header:'名称',dataIndex:'name'},
         {header:'描述',dataIndex:'descn',renderer:renderDescn}
     ]);
-	*/
 
     var data = [
         ['1','male','name1','descn1'],

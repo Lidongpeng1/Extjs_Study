@@ -1,0 +1,60 @@
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=gbk">
+        <title>VBoxlayout</title>
+        <link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+        <script type="text/javascript" src="../../adapter/ext/ext-base.js"></script>
+        <script type="text/javascript" src="../../ext-all.js"></script>
+        <script type="text/javascript">
+Ext.onReady(function(){
+    var panel = new Ext.Panel({
+		renderTo: Ext.getBody(),
+        layout:'fit',
+		height: 500,
+	    width: 600,
+        items:[{
+			xtype: 'panel',
+            title: 'vbox Layout',
+            layout:'vbox',
+			layoutConfig: {  
+				align: 'left',  
+				pack: 'start'  
+			},  
+            defaults: {
+                bodyStyle:'padding:20px'
+            },
+            items: [{
+				xtype: 'panel',
+				title: 'panel1',
+				html: 'panel1',
+				//height: 30,
+				flex: 1
+            },{
+				xtype: 'panel',
+				title: 'panel2',
+				html: 'panel2',
+				//height: 40,
+				flex: 1
+            },{
+                xtype: 'panel',
+				title: 'panel3',
+				html: 'panel3',
+				//height: 50,
+				flex:2
+            },{
+                xtype: 'panel',
+				title: 'panel4',
+				html: 'panel4',
+				//height: 60,
+				flex:3
+            }]
+        }]
+    });
+
+});
+        </script>
+    </head>
+    <body>
+        
+    </body>
+</html>

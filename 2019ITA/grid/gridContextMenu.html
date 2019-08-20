@@ -1,0 +1,71 @@
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=gbk">
+        <title>grid context menu</title>
+        <link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+        <script type="text/javascript" src="../../adapter/ext/ext-base.js"></script>
+        <script type="text/javascript" src="../../ext-all.js"></script>
+        <script type="text/javascript">
+Ext.onReady(function(){
+
+    var cm = new Ext.grid.ColumnModel([
+        {header:'编号',dataIndex:'id'},
+        {header:'名称',dataIndex:'name'},
+        {header:'描述',dataIndex:'descn'}
+    ]);
+
+    var data = [
+        ['1','name1','descn1'],
+        ['2','name2','descn2'],
+        ['3','name3','descn3'],
+        ['4','name4','descn4'],
+        ['5','name5','descn5']
+    ];
+
+    var store = new Ext.data.Store({
+        proxy: new Ext.data.MemoryProxy(data),
+        reader: new Ext.data.ArrayReader({}, [
+            {name: 'id'},
+            {name: 'name'},
+            {name: 'descn'}
+        ])
+    });
+    store.load();
+
+    var grid = new Ext.grid.GridPanel({
+        id: 'gId',
+		autoHeight: true,
+        renderTo: 'grid',
+        store: store,
+        cm: cm
+    });
+
+    var contextmenu = new Ext.menu.Menu({
+        id: 'theContextMenu',
+        items: [{
+            text: 'Check Detail Info',
+            handler: function(a, b, c){
+				let selections = Ext.getCmp('gId').getSelectionModel().getSelections();
+				selections.forEach(function(record){
+					Ext.Msg.alert('Info', record.get('id') + '-' + record.get('name') + '-' + record.get('descn'));
+				});
+            }
+        }]
+    });
+    grid.on("rowcontextmenu", function(grid, rowIndex, e){
+        e.preventDefault();
+        grid.getSelectionModel().selectRow(rowIndex);
+        contextmenu.showAt(e.getXY());
+    });
+	
+	grid.on("cellcontextmenu",function(gird, rowIndex, cellIndex, event) {
+		console.log("--dfas-df--d-");
+    });
+
+});
+        </script>
+    </head>
+    <body>
+        <div id="grid" style="height:265px;"></div>
+    </body>
+</html>

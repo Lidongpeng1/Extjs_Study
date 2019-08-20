@@ -9,7 +9,7 @@
 Ext.onReady(function(){
 
     var cm = new Ext.grid.ColumnModel([
-        new Ext.grid.RowNumberer(),  //注意此处
+        new Ext.grid.RowNumberer(),
         {header:'编号',dataIndex:'id'},
         {header:'性别',dataIndex:'sex'},
         {header:'名称',dataIndex:'name'},
@@ -43,7 +43,7 @@ Ext.onReady(function(){
     });
 
     Ext.get('remove').on('click', function() {
-        store.remove(store.getAt(1));  //store.remove()与store.getAt()
+        store.remove(store.getAt(1));
         grid.view.refresh();
     });
 

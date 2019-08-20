@@ -1,0 +1,71 @@
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=gbk">
+		<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+        <script type="text/javascript" src="../../adapter/ext/ext-base.js"></script>
+        <script type="text/javascript" src="../../ext-all.js"></script>
+        <title>store data connection</title>
+        <script type="text/javascript">
+Ext.onReady(function(){
+
+    var record = new Ext.data.Record.create([
+		{
+			name: 'name', type: 'string'
+		},{
+			name: 'age', type: 'int'
+		},{
+			name: 'weight', type: 'float'
+		}
+	]);
+	
+	var data = [
+		['am', 11, 1.5],
+		['am', 12, 1.6],
+		['dm', 13, 1.7],
+		['em', 14, 2.1],
+		['am', 12, 1.1],
+		['dm', 13, 1.0],
+		['dm', 14, 1.3]
+	];
+	
+	var store = new Ext.data.Store({
+		proxy: new Ext.data.MemoryProxy(data),
+		reader: new Ext.data.ArrayReader({}, record),
+		sortInfo: {field: 'name', direction: 'DESC'}
+	});
+	store.setDefaultSort('name', 'DESC');
+    store.sort('name', 'DESC');
+	
+	store.load();
+
+	
+	var combox = new Ext.form.ComboBox({
+		id: 'combox',
+		fieldLabel: 'Name',
+		emptyText: 'Choose/Input your name',
+		mode: 'local',
+		store: store,
+		triggerAction: 'all',
+		valueField: 'age',
+		displayField: 'name'
+	});
+
+
+	var panel = new Ext.form.FormPanel({
+		title: 'Combox Panel',
+		width: 400,
+		height: 200,
+		renderTo: 'test',
+		items:[
+			combox
+		]
+	});
+
+
+});
+        </script>
+    </head>
+    <body>
+        <div id="test"></div>
+    </body>
+</html>

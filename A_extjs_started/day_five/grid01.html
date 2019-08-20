@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Demo GridContextMenu</title>
+    <script src="../../adapter/ext/ext-base.js" type="text/javascript"></script>
+    <script src="../../ext-all.js" type="text/javascript"></script>
+    <link href="../../resources/css/ext-all.css" rel="stylesheet" type="text/css">
+    <script src="PagingMemoryProxy.js"></script>
+
+    <script>
+        Ext.onReady(function () {
+            var clms = new Ext.grid.ColumnModel([
+                {header:'编号',dataIndex:'id',sortable:true},
+                {header:'名称',dataIndex:'name',},
+                {header:'描述',dataIndex:'descn',}
+            ]);
+
+            var data = [
+                ['1','name1','descn1'],
+                ['2','name2','descn2'],
+                ['3','name3','descn3'],
+                ['4','name4','descn4'],
+                ['5','name5','descn5'],
+            ];
+
+            var store = new Ext.data.Store({
+                proxy:new Ext.data.MemoryProxy(data),
+                reader:new Ext.data.ArrayReader({},[
+                    {name:'id'},
+                    {name:'name'},
+                    {name:'descn'},
+                ])
+            })
+            store.load();
+
+            var grid = new Ext.grid.GridPanel({
+                loadMask:true,
+                renderTo:'grid',
+                width:300,
+                autoHeight:true,
+                loadMask:true,
+                store: store,
+                cm: clms,
+            });
+
+        });
+
+    </script>
+</head>
+<body>
+    <div id = 'grid'></div>
+</body>
+</html>

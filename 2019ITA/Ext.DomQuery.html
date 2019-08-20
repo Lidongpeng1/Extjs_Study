@@ -1,0 +1,35 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+	<title>Ext.DomQuery</title>
+	<link rel="stylesheet" type="text/css" href="../resources/css/ext-all.css" />
+ 	<!-- LIBS -->
+ 	<script type="text/javascript" src="../adapter/ext/ext-base.js"></script>
+ 	<!-- ENDLIBS -->
+    <script type="text/javascript" src="../ext-all.js"></script>
+	<script>
+		Ext.onReady(function() {
+			Ext.DomQuery.jsSelect('p').forEach(function(domElement){
+				Ext.get(domElement).highlight();
+			});
+			Ext.DomQuery.jsSelect('html/body/div/span').forEach(function(domElement){
+				Ext.get(domElement).highlight();
+			});
+	    });
+	</script>
+</head>
+<body>
+<p>p1</p>
+<br>
+<div>div.red1</div>
+<br>
+<p>p2</p>
+<br>
+<div>div.red2</div>
+<br>
+<p>p3</p>
+<br>
+<div><span>inner p1</span><span>inner p2</span></div>
+</body>
+</html>

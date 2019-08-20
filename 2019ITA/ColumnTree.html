@@ -1,0 +1,50 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+	<title>Column Tree</title>
+	<link rel="stylesheet" type="text/css" href="../resources/css/ext-all.css" />
+	<link rel="stylesheet" type="text/css" href="../examples/tree/column-tree.css" />
+	<link rel="stylesheet" type="text/css" href="../examples/ux/css/ColumnNodeUI.css" />
+ 	<!-- LIBS -->
+ 	<script type="text/javascript" src="../adapter/ext/ext-base.js"></script>
+ 	<!-- ENDLIBS -->
+    <script type="text/javascript" src="../ext-all.js"></script>
+	<script type="text/javascript" src="../examples/ux/columnNodeUI.js"></script>
+	<script>
+		Ext.onReady(function() {
+			var tree = new Ext.ux.tree.ColumnTree({
+				renderTo: 'test',
+				width: 550,
+				height: 300,
+				rootVisible: false,
+				autoScroll: true,
+				title: 'Column Tree',
+				columns:[{
+						header: 'Task',
+						width: 330,
+						dataIndex: 'task'
+					},{
+						header: 'Duration',
+						width: 100,
+						dataIndex: 'duration'
+					},{
+						header: 'Owner',
+						width: 100,
+						dataIndex: 'owner'
+					}],
+				loader: new Ext.tree.TreeLoader({
+					dataUrl: 'column_tree.txt',
+					uiProviders: {'col': Ext.tree.ColumnNodeUI}
+				}),
+				root: new Ext.tree.AsyncTreeNode({text:'Tasks'})
+			});
+
+			tree.expandAll();
+		});
+	</script>
+</head>
+<body>
+<div id="test"></div>
+</body>
+</html>

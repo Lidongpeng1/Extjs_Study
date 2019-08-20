@@ -1,0 +1,34 @@
+[{
+task: 'Learning ExtJS',
+duration: 'one week',
+owner: '2019 ITA',
+uiProvider: 'col',
+cls:'master-task',
+iconCls:'task-folder',
+children:[
+{
+task: 'Component and Event',
+duration: 'one day',
+owner: '2019 ITA',
+uiProvider: 'col',
+leaf:true,
+iconCls:'task'
+},
+{
+task: 'Form and Layout',
+duration: 'one day',
+owner: '2019 ITA',
+uiProvider: 'col',
+leaf:true,
+iconCls:'task'
+},
+{
+task: 'Tree and Grid',
+duration: 'two day',
+owner: '2019 ITA',
+uiProvider: 'col',
+leaf:true,
+iconCls:'task'
+}
+]
+}]
